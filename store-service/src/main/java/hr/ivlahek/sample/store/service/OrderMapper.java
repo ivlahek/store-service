@@ -8,9 +8,9 @@ import hr.ivlahek.sample.store.persistence.entity.PlacedOrder;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OrderMapper {
 
@@ -39,9 +39,7 @@ public class OrderMapper {
 
 
     public List<OrderDto> map(List<PlacedOrder> content, Map<Long, List<OrderItemDto>> itemsPerPlacedOrder) {
-        List<OrderDto> result = new ArrayList<>();
-        content.forEach(placedOrder -> result.add(map(placedOrder, itemsPerPlacedOrder.get(placedOrder.getId()))));
-        return result;
+        return content.stream().map(placedOrder -> map(placedOrder, itemsPerPlacedOrder.get(placedOrder.getId()))).collect(Collectors.toList());
     }
 
     private OrderDto map(PlacedOrder placedOrder, List<OrderItemDto> itemsPerPlacedOrder) {

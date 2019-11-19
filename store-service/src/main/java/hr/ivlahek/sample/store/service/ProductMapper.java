@@ -5,9 +5,9 @@ import hr.ivlahek.sample.store.client.product.ProductDto;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductMapper {
     public ProductDto map(Product product) {
@@ -35,9 +35,7 @@ public class ProductMapper {
     }
 
     public List<ProductDto> map(List<Product> products) {
-        List<ProductDto> result = new ArrayList<>();
-        products.forEach(product -> result.add(map(product)));
-        return result;
+        return products.stream().map(this::map).collect(Collectors.toList());
     }
 
     public Product mapForUpdate(Product product, CreateProductDto createProductDto) {
