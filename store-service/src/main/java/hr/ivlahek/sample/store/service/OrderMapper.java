@@ -5,6 +5,7 @@ import hr.ivlahek.sample.store.client.order.OrderDto;
 import hr.ivlahek.sample.store.client.order.OrderItemDto;
 import hr.ivlahek.sample.store.persistence.entity.PlacedOrder;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class OrderMapper {
         orderDto.setDateCreated(placedOrder.getDateCreated());
         orderDto.setEmail(placedOrder.getEmail());
         orderDto.setId(placedOrder.getId());
-        orderDto.setTotalPrice(placedOrder.getTotalPrice());
+        orderDto.setTotalPrice(BigDecimal.valueOf(placedOrder.getTotalPrice()));
         return orderDto;
     }
 

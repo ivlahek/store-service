@@ -4,6 +4,7 @@ import hr.ivlahek.sample.store.client.product.CreateProductDto;
 import hr.ivlahek.sample.store.client.product.ProductDto;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,7 @@ public class ProductMapper {
         ProductDto productDto = new ProductDto();
         productDto.setDescription(product.getDescription());
         productDto.setName(product.getName());
-        productDto.setPrice(product.getPrice());
+        productDto.setPrice(BigDecimal.valueOf(product.getPrice()));
         productDto.setId(product.getId());
         return productDto;
     }
@@ -28,7 +29,7 @@ public class ProductMapper {
     private Product mapCommon(Product product, CreateProductDto createProductDto) {
         product.setDescription(createProductDto.getDescription());
         product.setName(createProductDto.getName());
-        product.setPrice(createProductDto.getPrice());
+        product.setPrice(createProductDto.getPrice().doubleValue());
         product.setDateUpdated(new Date());
         return product;
     }

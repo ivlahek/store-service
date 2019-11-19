@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class OrderDto {
     private String email;
 
     @ApiModelProperty(value = DocumentationConstants.PLACED_ORDER_TOTAL_PRICE, required = true)
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     @ApiModelProperty(value = DocumentationConstants.PLACED_ORDER_DATE_CREATED, required = true)
     private Date dateCreated;

@@ -9,6 +9,7 @@ import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +56,7 @@ public class ProductMapperTest {
     @Test
     public void should_map_for_update() {
         Product product1 = ProductBuilder.aProduct1().build();
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withName("-1").withPrice(-1d).withDescription("-2").build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withName("-1").withPrice(BigDecimal.valueOf(-1d)).withDescription("-2").build();
 
         //OPERATE
 

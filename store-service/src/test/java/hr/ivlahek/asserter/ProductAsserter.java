@@ -13,7 +13,7 @@ public class ProductAsserter {
 
     public static void assertProductForUpdate(Product product, CreateProductDto createProductDto) {
         assertThat(product.getName()).isEqualTo(createProductDto.getName());
-        assertThat(product.getPrice()).isEqualTo(createProductDto.getPrice());
+        assertThat(product.getPrice()).isEqualTo(createProductDto.getPrice().doubleValue());
         assertThat(product.getDescription()).isEqualTo(createProductDto.getDescription());
         assertThat(product.getDateUpdated()).isInSameMinuteAs(Date.from(Instant.now()));
     }
@@ -27,7 +27,7 @@ public class ProductAsserter {
     public static void assertProduct(Product product, ProductDto productDto) {
         assertThat(product.getId()).isEqualTo(productDto.getId()).isNotNull();
         assertThat(product.getName()).isEqualTo(productDto.getName()).isNotNull();
-        assertThat(product.getPrice()).isEqualTo(productDto.getPrice()).isNotNull();
+        assertThat(product.getPrice()).isEqualTo(productDto.getPrice().doubleValue()).isNotNull();
         assertThat(product.getDescription()).isEqualTo(productDto.getDescription()).isNotNull();
     }
 }

@@ -41,7 +41,7 @@ public class OrderAsserter {
     public void assertAgainst(OrderDto orderDto, long placedOrderId) {
         PlacedOrder placedOrder = placedOrderRepository.findById(placedOrderId).get();
         assertThat(orderDto.getId()).isEqualTo(placedOrder.getId());
-        assertThat(orderDto.getTotalPrice()).isEqualTo(placedOrder.getTotalPrice());
+        assertThat(orderDto.getTotalPrice().doubleValue()).isEqualTo(placedOrder.getTotalPrice());
         assertThat(orderDto.getEmail()).isEqualTo(placedOrder.getEmail());
         assertThat(orderDto.getDateCreated()).isEqualTo(placedOrder.getDateCreated());
         assertThat(orderDto.getId()).isEqualTo(placedOrder.getId());

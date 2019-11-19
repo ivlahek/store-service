@@ -1,9 +1,11 @@
 package hr.ivlahek.sample.store.client.product;
 
+import java.math.BigDecimal;
+
 public final class CreateProductDtoBuilder {
     private String name = "name";
     private String description = "description";
-    private Double price = 2.3d;
+    private BigDecimal price = BigDecimal.valueOf(2.3d);
 
     private CreateProductDtoBuilder() {
     }
@@ -22,7 +24,7 @@ public final class CreateProductDtoBuilder {
         return this;
     }
 
-    public CreateProductDtoBuilder withPrice(Double price) {
+    public CreateProductDtoBuilder withPrice(BigDecimal price) {
         this.price = price;
         return this;
     }

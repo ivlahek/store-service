@@ -53,35 +53,7 @@ public class OrderMapperTest {
         assertThat(dto.getDateCreated()).isEqualTo(placedOrder.getDateCreated());
         assertThat(dto.getEmail()).isEqualTo(placedOrder.getEmail());
         assertThat(dto.getId()).isEqualTo(placedOrder.getId()).isNotNull();
-        assertThat(dto.getTotalPrice()).isEqualTo(placedOrder.getTotalPrice());
+        assertThat(dto.getTotalPrice().doubleValue()).isEqualTo(placedOrder.getTotalPrice());
     }
-
-//    @Test
-//    public void should_map_to_dto_list() {
-//        PlacedOrder placedOrder1 = PlacedOrderBuilder.anOrder1().withId(1L)
-//                .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product1).withQuantity(1).build())
-//                .build();
-//        PlacedOrder placedOrder2 = PlacedOrderBuilder.anOrder2().withId(2L)
-//                .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product2).withQuantity(2).build())
-//                .build();
-//
-//        List<PlacedOrderDto> dtos = orderMapper.map(Lists.newArrayList(placedOrder1, placedOrder2));
-//        assertThat(dtos).hasSize(2);
-//
-//        PlacedOrderDto placedOrderDto1 = dtos.get(0);
-//        assertProductDto(placedOrderDto1, placedOrder1);
-//        assertThat(placedOrderDto1.getPlacedOrderItemDtos()).hasSize(1);
-//        PlacedOrderItemDto placedOrderItemDto1 = placedOrderDto1.getPlacedOrderItemDtos().get(0);
-//        assertThat(placedOrderItemDto1.getProductId()).isEqualTo(product1.getId());
-//        assertThat(placedOrderItemDto1.getQuantity()).isEqualTo(1);
-//
-//        PlacedOrderDto placedOrderDto2 = dtos.get(1);
-//        assertProductDto(placedOrderDto2, placedOrder2);
-//        assertThat(placedOrderDto2.getPlacedOrderItemDtos()).hasSize(1);
-//
-//        PlacedOrderItemDto placedOrderItemDto2 = placedOrderDto2.getPlacedOrderItemDtos().get(0);
-//        assertThat(placedOrderItemDto2.getProductId()).isEqualTo(product2.getId());
-//        assertThat(placedOrderItemDto2.getQuantity()).isEqualTo(2);
-//    }
 
 }

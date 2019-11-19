@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,7 +79,7 @@ public class ProductControllerTest extends WebApiTest {
     @Test
     public void should_inform_price_is_zero() {
         badRequestAsserter
-                .executePost(createProductDtoBuilder.withPrice(0d).build())
+                .executePost(createProductDtoBuilder.withPrice(BigDecimal.ZERO).build())
                 .assertBadRequest()
                 .assertWithMessage(ValidationMessages.PRODUCT_PRICE_NEGATIVE_OR_ZERO);
     }
@@ -86,7 +87,7 @@ public class ProductControllerTest extends WebApiTest {
     @Test
     public void should_inform_price_is_negative() {
         badRequestAsserter
-                .executePost(createProductDtoBuilder.withPrice(-1d).build())
+                .executePost(createProductDtoBuilder.withPrice(BigDecimal.valueOf(-1d)).build())
                 .assertBadRequest()
                 .assertWithMessage(ValidationMessages.PRODUCT_PRICE_NEGATIVE_OR_ZERO);
     }
@@ -133,7 +134,7 @@ public class ProductControllerTest extends WebApiTest {
         CreateProductDto createProductDto = createProductDtoBuilder
                 .withName(product2.getName())
                 .withDescription(product2.getDescription())
-                .withPrice(product.getPrice()).build();
+                .withPrice(BigDecimal.valueOf(product.getPrice())).build();
 
         //OPERATE
         ProductDto productDto = productClient.update(product.getId(), createProductDto);
@@ -153,7 +154,7 @@ public class ProductControllerTest extends WebApiTest {
         CreateProductDto createProductDto = createProductDtoBuilder
                 .withName(product2.getName())
                 .withDescription(product2.getDescription())
-                .withPrice(product1.getPrice()).build();
+                .withPrice(BigDecimal.valueOf(product1.getPrice())).build();
 
         //OPERATE
         BadRequestAsserterFactory.createForProductIdResource(testRestTemplate).executePut(createProductDto, product1.getId())
