@@ -8,7 +8,7 @@
 ## Maven 
 - maven build can be run the build (including unit and integration tests) with the command `mvn clean install -Pjenkins`
 ## API authentication
-Api authentication is not implemented but I would use JWTs as OAuth 2.0 Bearer Tokens.
+Api authentication is not implemented but I would use JWTs.
 In the JWT token we can encode all relevant parts of an access token into the access token itself instead of having to store them in a database
 
 By doing this we are removing the pressure from the database, because the data about the user is located in the JWT, not in the database.
