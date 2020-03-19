@@ -1,4 +1,4 @@
-package hr.ivlahek.sample.store.service;
+package hr.ivlahek.sample.store.service.mapper;
 
 import hr.ivlahek.sample.store.client.product.CreateProductDto;
 import hr.ivlahek.sample.store.client.product.ProductDto;
@@ -35,7 +35,10 @@ public class ProductMapper {
     }
 
     public List<ProductDto> map(List<Product> products) {
-        return products.stream().map(this::map).collect(Collectors.toList());
+        return products
+                .stream()
+                .map(this::map)
+                .collect(Collectors.toList());
     }
 
     public Product mapForUpdate(Product product, CreateProductDto createProductDto) {

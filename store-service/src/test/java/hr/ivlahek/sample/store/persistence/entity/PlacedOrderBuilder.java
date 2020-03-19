@@ -11,7 +11,7 @@ public final class PlacedOrderBuilder {
     private String email = EntityDefaults.PlacedOrder1Defaults.EMAIL;
     private double totalPrice = EntityDefaults.PlacedOrder1Defaults.TOTAL_PRICE;
     private Date dateCreated = EntityDefaults.PlacedOrder1Defaults.DATE_CREATED;
-    private List<PlacedOrderItem> placedOrderItems = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private PlacedOrderBuilder() {
     }
@@ -53,23 +53,23 @@ public final class PlacedOrderBuilder {
         return this;
     }
 
-    public PlacedOrderBuilder withPlacedOrderItems(List<PlacedOrderItem> placedOrderItems) {
-        this.placedOrderItems = placedOrderItems;
+    public PlacedOrderBuilder withPlacedOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
         return this;
     }
 
-    public PlacedOrder build() {
-        PlacedOrder placedOrder = new PlacedOrder();
-        placedOrder.setId(id);
-        placedOrder.setEmail(email);
-        placedOrder.setTotalPrice(totalPrice);
-        placedOrder.setDateCreated(dateCreated);
-        placedOrder.setPlacedOrderItems(placedOrderItems);
-        return placedOrder;
+    public Order build() {
+        Order order = new Order();
+        order.setId(id);
+        order.setEmail(email);
+        order.setTotalPrice(totalPrice);
+        order.setDateCreated(dateCreated);
+        order.setOrderItems(orderItems);
+        return order;
     }
 
-    public PlacedOrderBuilder addPlacedOrderItem(PlacedOrderItem placedOrder) {
-        this.placedOrderItems.add(placedOrder);
+    public PlacedOrderBuilder addPlacedOrderItem(OrderItem placedOrder) {
+        this.orderItems.add(placedOrder);
         return this;
     }
 }

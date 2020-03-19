@@ -19,7 +19,7 @@ public class BadRequestAsserter {
     }
 
     public BadRequestAsserter executeGet(int id) {
-        ResponseEntity<ErrorMessage> exchange = this.restTemplate.exchange(this.endPoint, HttpMethod.GET, (HttpEntity) null, ErrorMessage.class, new Object[]{id});
+        ResponseEntity<ErrorMessage> exchange = this.restTemplate.exchange(this.endPoint, HttpMethod.GET, null, ErrorMessage.class, id);
         this.genericErrorMesssage = exchange.getBody();
         this.httpCode = exchange.getStatusCodeValue();
         return this;
@@ -33,7 +33,7 @@ public class BadRequestAsserter {
     }
 
     public BadRequestAsserter executePost(Object request) {
-        ResponseEntity<ErrorMessage> exchange = this.restTemplate.postForEntity(this.endPoint, request, ErrorMessage.class, new Object[0]);
+        ResponseEntity<ErrorMessage> exchange = this.restTemplate.postForEntity(this.endPoint, request, ErrorMessage.class);
         this.genericErrorMesssage = exchange.getBody();
         this.httpCode = exchange.getStatusCodeValue();
         return this;

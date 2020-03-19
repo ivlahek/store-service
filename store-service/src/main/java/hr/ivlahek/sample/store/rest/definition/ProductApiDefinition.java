@@ -5,6 +5,7 @@ import hr.ivlahek.sample.store.client.page.PageResponseDto;
 import hr.ivlahek.sample.store.client.product.CreateProductDto;
 import hr.ivlahek.sample.store.client.product.ProductDto;
 import hr.ivlahek.sample.store.client.product.ProductResourceEndpoints;
+import hr.ivlahek.sample.store.config.ApiPageable;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,7 +26,6 @@ public interface ProductApiDefinition {
     ProductDto createProduct(@Valid @RequestBody @NotNull CreateProductDto createProductDto);
 
 
-
     @PutMapping(path = ProductResourceEndpoints.PRODUCTS_BY_ID)
     @ApiOperation("Update product.")
     @ApiResponses(value = {
@@ -33,10 +33,10 @@ public interface ProductApiDefinition {
             @ApiResponse(code = 404, message = "Product does not exist! Error code 2", response = ErrorMessage.class),
             @ApiResponse(code = 409, message = "Product with the provided name already exists! Error code 1", response = ErrorMessage.class),
     })
+    @ApiPageable
     ProductDto updateProduct(
             @PathVariable("productId") long productId,
             @Valid @RequestBody @NotNull CreateProductDto createProductDto);
-
 
 
     @GetMapping(path = ProductResourceEndpoints.PRODUCTS)
@@ -44,6 +44,7 @@ public interface ProductApiDefinition {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully fetched a list of products.", response = PageResponseDto.class),
     })
+    @ApiPageable
     PageResponseDto<ProductDto> getAllProducts(
             @ApiParam("Paging parameter")
             @NotNull Pageable pageable);

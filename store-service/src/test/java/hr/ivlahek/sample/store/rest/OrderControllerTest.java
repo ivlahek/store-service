@@ -28,8 +28,8 @@ public class OrderControllerTest extends WebApiTest {
     @Autowired
     private OrderAsserter orderAsserter;
     private OrderClient orderClient;
-    private PlacedOrder placedOrder1;
-    private PlacedOrder placedOrder2;
+    private Order order1;
+    private Order order2;
 
     @Before
     public void setUp() {
@@ -43,22 +43,22 @@ public class OrderControllerTest extends WebApiTest {
 
         orderClient = new OrderClient(testRestTemplate);
 
-        placedOrder1 = PlacedOrderBuilder.anOrder1().build();
-        placedOrderRepository.save(placedOrder1);
+        order1 = PlacedOrderBuilder.anOrder1().build();
+        orderRepository.save(order1);
 
-        PlacedOrderItem placedOrderItem1 = PlacedOrderProductBuilder
+        OrderItem orderItem1 = PlacedOrderProductBuilder
                 .aPlacedOrderItem()
                 .withProduct(product1)
-                .withPlacedOrder(placedOrder1).build();
-        placedOrderItemRepository.save(placedOrderItem1);
+                .withPlacedOrder(order1).build();
+        orderItemRepository.save(orderItem1);
 
-        placedOrder2 = PlacedOrderBuilder.anOrder1().build();
-        placedOrderRepository.save(placedOrder2);
+        order2 = PlacedOrderBuilder.anOrder1().build();
+        orderRepository.save(order2);
 
-        PlacedOrderItem placedOrderItem2 = PlacedOrderProductBuilder.aPlacedOrderItem()
+        OrderItem orderItem2 = PlacedOrderProductBuilder.aPlacedOrderItem()
                 .withProduct(product2)
-                .withPlacedOrder(placedOrder2).build();
-        placedOrderItemRepository.save(placedOrderItem2);
+                .withPlacedOrder(order2).build();
+        orderItemRepository.save(orderItem2);
     }
 
     @Test
@@ -175,8 +175,8 @@ public class OrderControllerTest extends WebApiTest {
 
         //CHECK
         assertThat(page).hasSize(2);
-        orderAsserter.assertAgainst(page.get(0), placedOrder1.getId());
-        orderAsserter.assertAgainst(page.get(1), placedOrder2.getId());
+        orderAsserter.assertAgainst(page.get(0), order1.getId());
+        orderAsserter.assertAgainst(page.get(1), order2.getId());
     }
 
     @Test
@@ -188,8 +188,8 @@ public class OrderControllerTest extends WebApiTest {
 
         //CHECK
         assertThat(page).hasSize(1);
-        assertThat(page.get(0).getId()).isEqualTo(placedOrder1.getId());
-        orderAsserter.assertAgainst(page.get(0), placedOrder1.getId());
+        assertThat(page.get(0).getId()).isEqualTo(order1.getId());
+        orderAsserter.assertAgainst(page.get(0), order1.getId());
     }
 
     @Test
@@ -201,6 +201,6 @@ public class OrderControllerTest extends WebApiTest {
 
         //CHECK
         assertThat(page).hasSize(1);
-        orderAsserter.assertAgainst(page.get(0), placedOrder2.getId());
+        orderAsserter.assertAgainst(page.get(0), order2.getId());
     }
 }

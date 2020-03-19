@@ -6,6 +6,7 @@ import hr.ivlahek.sample.store.exception.NotFoundException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.repository.ProductRepository;
+import hr.ivlahek.sample.store.service.mapper.ProductMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,9 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     @Autowired
     private ProductRepository productRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public Product create(CreateProductDto createProductDto) {
         logger.info("Create product {}", createProductDto);

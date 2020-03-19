@@ -12,11 +12,11 @@ import javax.annotation.PostConstruct;
 @ComponentScan(basePackages = "hr.ivlahek")
 public class Application {
 
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     @PostConstruct
     public void postInit() {

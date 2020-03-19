@@ -1,7 +1,7 @@
 package hr.ivlahek.sample.store.persistence.entity;
 
 public final class PlacedOrderProductBuilder {
-    private PlacedOrder placedOrder;
+    private Order order;
     private Product product;
     private int quantity = 1;
 
@@ -12,8 +12,8 @@ public final class PlacedOrderProductBuilder {
         return new PlacedOrderProductBuilder();
     }
 
-    public PlacedOrderProductBuilder withPlacedOrder(PlacedOrder placedOrder) {
-        this.placedOrder = placedOrder;
+    public PlacedOrderProductBuilder withPlacedOrder(Order order) {
+        this.order = order;
         return this;
     }
 
@@ -27,11 +27,11 @@ public final class PlacedOrderProductBuilder {
         return this;
     }
 
-    public PlacedOrderItem build() {
-        PlacedOrderItem placedOrderItem = new PlacedOrderItem();
-        placedOrderItem.setPlacedOrder(placedOrder);
-        placedOrderItem.setProduct(product);
-        placedOrderItem.setQuantity(quantity);
-        return placedOrderItem;
+    public OrderItem build() {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
+        orderItem.setProduct(product);
+        orderItem.setQuantity(quantity);
+        return orderItem;
     }
 }

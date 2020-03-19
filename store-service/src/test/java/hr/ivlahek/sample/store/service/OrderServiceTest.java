@@ -6,7 +6,7 @@ import hr.ivlahek.sample.store.client.order.OrderItemDtoBuilder;
 import hr.ivlahek.sample.store.exception.AppException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
-import hr.ivlahek.sample.store.persistence.entity.PlacedOrder;
+import hr.ivlahek.sample.store.persistence.entity.Order;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
 import org.junit.Before;
@@ -40,13 +40,13 @@ public class OrderServiceTest extends RepositoryTest {
                 .build();
 
         //OPERATE
-        PlacedOrder placedOrder = orderService.placeOrder(createOrderDto);
+        Order order = orderService.placeOrder(createOrderDto);
 
         //CHECK
-        placedOrder = placedOrderRepository.findById(placedOrder.getId()).get();
-        assertThat(placedOrder.getTotalPrice()).isEqualTo(7d);
-        assertThat(placedOrder.getDateCreated()).isToday();
-        assertThat(placedOrder.getEmail()).isEqualTo(createOrderDto.getEmail());
+        order = orderRepository.findById(order.getId()).get();
+        assertThat(order.getTotalPrice()).isEqualTo(7d);
+        assertThat(order.getDateCreated()).isToday();
+        assertThat(order.getEmail()).isEqualTo(createOrderDto.getEmail());
     }
 
     @Test

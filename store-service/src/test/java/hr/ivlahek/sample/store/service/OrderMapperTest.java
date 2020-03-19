@@ -4,6 +4,7 @@ import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderDtoBuilder;
 import hr.ivlahek.sample.store.client.order.OrderDto;
 import hr.ivlahek.sample.store.persistence.entity.*;
+import hr.ivlahek.sample.store.service.mapper.OrderMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,32 +29,32 @@ public class OrderMapperTest {
     public void should_map_to_entity() {
         CreateOrderDto createOrder = CreateOrderDtoBuilder.aCreateOrderDto().build();
 
-        PlacedOrder placedOrder = orderMapper.map(createOrder, 10d);
+        Order order = orderMapper.map(createOrder, 10d);
 
-        assertThat(placedOrder.getDateCreated()).isInSameMinuteAs(Date.from(Instant.now()));
-        assertThat(placedOrder.getEmail()).isEqualTo(createOrder.getEmail());
-        assertThat(placedOrder.getId()).isNull();
-        assertThat(placedOrder.getTotalPrice()).isEqualTo(10d);
+        assertThat(order.getDateCreated()).isInSameMinuteAs(Date.from(Instant.now()));
+        assertThat(order.getEmail()).isEqualTo(createOrder.getEmail());
+        assertThat(order.getId()).isNull();
+        assertThat(order.getTotalPrice()).isEqualTo(10d);
     }
 
     @Test
     public void should_map_to_dto() {
-        PlacedOrder placedOrder = PlacedOrderBuilder.anOrder().withId(1L)
+        Order order = PlacedOrderBuilder.anOrder().withId(1L)
                 .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product1).withQuantity(1).build())
                 .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product2).withQuantity(2).build())
                 .build();
 
-        OrderDto dto = orderMapper.map(placedOrder);
+        OrderDto dto = orderMapper.map(order);
 
-        assertProductDto(dto, placedOrder);
+        assertProductDto(dto, order);
         assertThat(dto.getOrderItemDtos()).hasSize(2);
     }
 
-    private void assertProductDto(OrderDto dto, PlacedOrder placedOrder) {
-        assertThat(dto.getDateCreated()).isEqualTo(placedOrder.getDateCreated());
-        assertThat(dto.getEmail()).isEqualTo(placedOrder.getEmail());
-        assertThat(dto.getId()).isEqualTo(placedOrder.getId()).isNotNull();
-        assertThat(dto.getTotalPrice().doubleValue()).isEqualTo(placedOrder.getTotalPrice());
+    private void assertProductDto(OrderDto dto, Order order) {
+        assertThat(dto.getDateCreated()).isEqualTo(order.getDateCreated());
+        assertThat(dto.getEmail()).isEqualTo(order.getEmail());
+        assertThat(dto.getId()).isEqualTo(order.getId()).isNotNull();
+        assertThat(dto.getTotalPrice().doubleValue()).isEqualTo(order.getTotalPrice());
     }
 
 }

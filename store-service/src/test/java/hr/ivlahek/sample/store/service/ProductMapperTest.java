@@ -6,6 +6,7 @@ import hr.ivlahek.sample.store.client.product.CreateProductDtoBuilder;
 import hr.ivlahek.sample.store.client.product.ProductDto;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
+import hr.ivlahek.sample.store.service.mapper.ProductMapper;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 

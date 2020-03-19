@@ -3,9 +3,9 @@ package hr.ivlahek.asserter;
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.OrderDto;
 import hr.ivlahek.sample.store.client.order.OrderItemDto;
-import hr.ivlahek.sample.store.persistence.entity.PlacedOrder;
-import hr.ivlahek.sample.store.persistence.entity.PlacedOrderItem;
-import hr.ivlahek.sample.store.persistence.repository.PlacedOrderRepository;
+import hr.ivlahek.sample.store.persistence.entity.Order;
+import hr.ivlahek.sample.store.persistence.entity.OrderItem;
+import hr.ivlahek.sample.store.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +21,17 @@ import static org.assertj.core.api.Assertions.extractProperty;
 public class OrderAsserter {
 
     @Autowired
-    private PlacedOrderRepository placedOrderRepository;
+    private OrderRepository orderRepository;
 
     @Transactional
     public void assertOrders(long placedOrderId, CreateOrderDto createOrderDto) {
-        PlacedOrder placedOrder = placedOrderRepository.findById(placedOrderId).get();
-        assertThat(placedOrder.getDateCreated()).isInSameMinuteAs(Date.from(Instant.now()));
-        assertThat(placedOrder.getEmail()).isEqualTo(createOrderDto.getEmail());
-        assertThat(placedOrder.getTotalPrice()).isEqualTo(16.7);
-        List<PlacedOrderItem> placedOrderItems = placedOrder.getPlacedOrderItems();
-        assertThat(placedOrderItems).hasSize(2);
-        assertThat(extractProperty("product.id").from(placedOrderItems)).containsOnly(
+        Order order = orderRepository.findById(placedOrderId).get();
+        assertThat(order.getDateCreated()).isInSameMinuteAs(Date.from(Instant.now()));
+        assertThat(order.getEmail()).isEqualTo(createOrderDto.getEmail());
+        assertThat(order.getTotalPrice()).isEqualTo(16.7);
+        List<OrderItem> orderItems = order.getOrderItems();
+        assertThat(orderItems).hasSize(2);
+        assertThat(extractProperty("product.id").from(orderItems)).containsOnly(
                 createOrderDto.getOrderItemDtos().get(0).getProductId(),
                 createOrderDto.getOrderItemDtos().get(1).getProductId());
 
@@ -39,20 +39,20 @@ public class OrderAsserter {
 
     @Transactional
     public void assertAgainst(OrderDto orderDto, long placedOrderId) {
-        PlacedOrder placedOrder = placedOrderRepository.findById(placedOrderId).get();
-        assertThat(orderDto.getId()).isEqualTo(placedOrder.getId());
-        assertThat(orderDto.getTotalPrice().doubleValue()).isEqualTo(placedOrder.getTotalPrice());
-        assertThat(orderDto.getEmail()).isEqualTo(placedOrder.getEmail());
-        assertThat(orderDto.getDateCreated()).isEqualTo(placedOrder.getDateCreated());
-        assertThat(orderDto.getId()).isEqualTo(placedOrder.getId());
+        Order order = orderRepository.findById(placedOrderId).get();
+        assertThat(orderDto.getId()).isEqualTo(order.getId());
+        assertThat(orderDto.getTotalPrice().doubleValue()).isEqualTo(order.getTotalPrice());
+        assertThat(orderDto.getEmail()).isEqualTo(order.getEmail());
+        assertThat(orderDto.getDateCreated()).isEqualTo(order.getDateCreated());
+        assertThat(orderDto.getId()).isEqualTo(order.getId());
 
-        assertThat(orderDto.getOrderItemDtos()).hasSameSizeAs(placedOrder.getPlacedOrderItems());
-        assertPlacedOrderProduct(orderDto.getOrderItemDtos().get(0), placedOrder.getPlacedOrderItems().get(0));
+        assertThat(orderDto.getOrderItemDtos()).hasSameSizeAs(order.getOrderItems());
+        assertPlacedOrderProduct(orderDto.getOrderItemDtos().get(0), order.getOrderItems().get(0));
     }
 
-    private void assertPlacedOrderProduct(OrderItemDto orderItemDto, PlacedOrderItem placedOrderItem) {
-        assertThat(orderItemDto.getProductId()).isEqualTo(placedOrderItem.getProduct().getId());
-        assertThat(orderItemDto.getQuantity()).isEqualTo(placedOrderItem.getQuantity());
+    private void assertPlacedOrderProduct(OrderItemDto orderItemDto, OrderItem orderItem) {
+        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem.getProduct().getId());
+        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem.getQuantity());
 
     }
 }

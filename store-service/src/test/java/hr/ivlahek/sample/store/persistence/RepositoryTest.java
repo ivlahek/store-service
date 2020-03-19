@@ -2,8 +2,8 @@ package hr.ivlahek.sample.store.persistence;
 
 import hr.ivlahek.IntegrationTest;
 import hr.ivlahek.sample.store.Application;
-import hr.ivlahek.sample.store.persistence.repository.PlacedOrderItemRepository;
-import hr.ivlahek.sample.store.persistence.repository.PlacedOrderRepository;
+import hr.ivlahek.sample.store.persistence.repository.OrderItemRepository;
+import hr.ivlahek.sample.store.persistence.repository.OrderRepository;
 import hr.ivlahek.sample.store.persistence.repository.ProductRepository;
 import org.junit.After;
 import org.junit.experimental.categories.Category;
@@ -20,15 +20,15 @@ public abstract class RepositoryTest {
     @Autowired
     protected ProductRepository productRepository;
     @Autowired
-    protected PlacedOrderRepository placedOrderRepository;
+    protected OrderRepository orderRepository;
     @Autowired
-    protected PlacedOrderItemRepository placedOrderItemRepository;
+    protected OrderItemRepository orderItemRepository;
 
     @After
     public void tearDown() {
-        placedOrderItemRepository.deleteAll();
+        orderItemRepository.deleteAll();
         productRepository.deleteAll();
-        placedOrderRepository.deleteAll();
+        orderRepository.deleteAll();
 
     }
 }

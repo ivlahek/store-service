@@ -1,7 +1,7 @@
 package hr.ivlahek.sample.store.exception.handler;
 
-import hr.ivlahek.sample.store.exception.AppException;
 import hr.ivlahek.sample.store.client.error.ErrorMessage;
+import hr.ivlahek.sample.store.exception.AppException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package hr.ivlahek.sample.store.persistence.repository;
 
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
-import hr.ivlahek.sample.store.persistence.entity.PlacedOrder;
+import hr.ivlahek.sample.store.persistence.entity.Order;
 import hr.ivlahek.sample.store.persistence.entity.PlacedOrderBuilder;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
@@ -17,70 +17,70 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlacedOrderRepositoryTest extends RepositoryTest {
+public class OrderRepositoryTest extends RepositoryTest {
 
-    private PlacedOrder placedOrder1;
-    private PlacedOrder placedOrder2;
+    private Order order1;
+    private Order order2;
 
     @Before
     public void setUp() {
-        placedOrder1 = PlacedOrderBuilder.anOrder1().build();
-        placedOrderRepository.save(placedOrder1);
-        placedOrder2 = PlacedOrderBuilder.anOrder2().build();
-        placedOrderRepository.save(placedOrder2);
+        order1 = PlacedOrderBuilder.anOrder1().build();
+        orderRepository.save(order1);
+        order2 = PlacedOrderBuilder.anOrder2().build();
+        orderRepository.save(order2);
     }
 
     @Test
     public void should_return_orders_between_dates() {
-        List<PlacedOrder> placedOrder = placedOrderRepository.findByDateCreatedBetween(
+        List<Order> order = orderRepository.findByDateCreatedBetween(
                 Date.from(Instant.now().minusSeconds(50)),
                 Date.from(Instant.now().plusSeconds(50)), Pageable.unpaged()).getContent();
 
         //CHECK
-        assertThat(placedOrder).hasSize(1);
-        assertThat(placedOrder.get(0).getId()).isEqualTo(placedOrder1.getId());
+        assertThat(order).hasSize(1);
+        assertThat(order.get(0).getId()).isEqualTo(order1.getId());
     }
 
     @Test
     public void should_return_orders_first_page_between_dates() {
-        Page<PlacedOrder> page = placedOrderRepository.findByDateCreatedBetween(
+        Page<Order> page = orderRepository.findByDateCreatedBetween(
                 Date.from(Instant.now().minusSeconds(150)),
                 Date.from(Instant.now().plusSeconds(150)), PageRequest.of(0, 1));
-        List<PlacedOrder> placedOrder = page.getContent();
+        List<Order> order = page.getContent();
 
         //CHECK
         assertThat(page.getTotalElements()).isEqualTo(2);
-        assertThat(placedOrder).hasSize(1);
-        assertThat(placedOrder.get(0).getId()).isEqualTo(placedOrder1.getId());
+        assertThat(order).hasSize(1);
+        assertThat(order.get(0).getId()).isEqualTo(order1.getId());
     }
 
     @Test
     public void should_return_orders_second_page_between_dates() {
-        Page<PlacedOrder> page = placedOrderRepository.findByDateCreatedBetween(
+        Page<Order> page = orderRepository.findByDateCreatedBetween(
                 Date.from(Instant.now().minusSeconds(150)),
                 Date.from(Instant.now().plusSeconds(150)), PageRequest.of(1, 1));
-        List<PlacedOrder> placedOrder = page.getContent();
+        List<Order> order = page.getContent();
 
         //CHECK
         assertThat(page.getTotalElements()).isEqualTo(2);
-        assertThat(placedOrder).hasSize(1);
-        assertThat(placedOrder.get(0).getId()).isEqualTo(placedOrder2.getId());
+        assertThat(order).hasSize(1);
+        assertThat(order.get(0).getId()).isEqualTo(order2.getId());
     }
 
     @Test
     public void should_create_order_with_product() {
         Product product = ProductBuilder.aProduct1().build();
-        product = productRepository.save(product);
-        PlacedOrder placedOrder = PlacedOrderBuilder.anOrder().build();
+        productRepository.save(product);
+        Order order = PlacedOrderBuilder.anOrder().build();
 
         //OPERATE
-        placedOrderRepository.save(placedOrder);
+        orderRepository.save(order);
 
         //OPERATE
-        placedOrderRepository.save(placedOrder);
+        orderRepository.save(order);
 
         //CHECK
-        assertThat(placedOrder.getId()).isNotNull();
+        assertThat(order.getId()).isNotNull();
     }
 
 }

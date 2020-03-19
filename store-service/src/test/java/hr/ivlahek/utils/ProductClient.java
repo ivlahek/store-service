@@ -22,19 +22,18 @@ public class ProductClient {
         this.testRestTemplate = testRestTemplate;
     }
 
+    public static String buildForUrl(String path, int page, int pageSize) {
+        return UriComponentsBuilder.fromPath(path)
+                .queryParam("page", page)
+                .queryParam("size", pageSize).build().toString();
+    }
+
     public List<ProductDto> getPaged(int page, int size) {
         List pageResponse = testRestTemplate.getForEntity(buildForUrl(ProductResourceEndpoints.PRODUCTS, page, size), PageResponseDto.class).getBody().getContent();
 
         List<ProductDto> productDtos = new ArrayList<>();
         pageResponse.forEach(o -> productDtos.add(objectMapper.convertValue(o, ProductDto.class)));
         return productDtos;
-    }
-
-
-    public static String buildForUrl(String path, int page, int pageSize) {
-        return UriComponentsBuilder.fromPath(path)
-                .queryParam("page", page)
-                .queryParam("size", pageSize).build().toString();
     }
 
     public ProductDto update(Long id, CreateProductDto createProductDto) {
