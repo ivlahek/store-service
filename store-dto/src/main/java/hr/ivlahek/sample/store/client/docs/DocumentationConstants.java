@@ -12,4 +12,5 @@ public class DocumentationConstants {
     public static final String ORDER_ITEM_PRODUCT_QUANTITY = "Number of items!";
     public static final String PRODUCT_ID = "Product id";
     public static final String PRODUCT_SKU = "Product sku. Product sku is unique.";
+    public static final String ORDER_ITEM_PRICE = "Ordered item price at the moment when the order was placed";
 }

@@ -1,15 +1,16 @@
 package hr.ivlahek.sample.store.persistence.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity(name = "product")
 @Data
+@Where(clause = "deleted = false")
 public class Product {
+
     @Id
     @SequenceGenerator(name = "product_sequence", sequenceName = "product_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
@@ -31,6 +32,18 @@ public class Product {
     @Column(name = "date_updated")
     private Date dateUpdated;
 
-    @OneToMany(mappedBy = "product")
-    private List<OrderItem> orderItems = new ArrayList<>();
+    @Column(name = "deleted")
+    private boolean deleted;
+
+    public void setDeleted() {
+        deleted = true;
+    }
+
+    public void setCreated() {
+        deleted = false;
+    }
+
+    public Product() {
+        deleted = false;
+    }
 }

@@ -2,7 +2,7 @@ package hr.ivlahek.sample.store.persistence.repository;
 
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
 import hr.ivlahek.sample.store.persistence.entity.Order;
-import hr.ivlahek.sample.store.persistence.entity.PlacedOrderBuilder;
+import hr.ivlahek.sample.store.persistence.entity.OrderBuilder;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
 import org.junit.Before;
@@ -24,9 +24,9 @@ public class OrderRepositoryTest extends RepositoryTest {
 
     @Before
     public void setUp() {
-        order1 = PlacedOrderBuilder.anOrder1().build();
+        order1 = OrderBuilder.anOrder1().build();
         orderRepository.save(order1);
-        order2 = PlacedOrderBuilder.anOrder2().build();
+        order2 = OrderBuilder.anOrder2().build();
         orderRepository.save(order2);
     }
 
@@ -71,7 +71,7 @@ public class OrderRepositoryTest extends RepositoryTest {
     public void should_create_order_with_product() {
         Product product = ProductBuilder.aProduct1().build();
         productRepository.save(product);
-        Order order = PlacedOrderBuilder.anOrder().build();
+        Order order = OrderBuilder.anOrder().build();
 
         //OPERATE
         orderRepository.save(order);

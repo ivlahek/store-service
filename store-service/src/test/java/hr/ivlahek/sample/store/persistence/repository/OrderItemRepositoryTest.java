@@ -12,11 +12,11 @@ public class OrderItemRepositoryTest extends RepositoryTest {
     public void should_save_placed_order_product() {
         Product product = ProductBuilder.aProduct1().build();
         productRepository.save(product);
-        Order order = PlacedOrderBuilder.anOrder().build();
+        Order order = OrderBuilder.anOrder().build();
         orderRepository.save(order);
 
         //OPERATE
-        OrderItem orderItem = PlacedOrderProductBuilder.aPlacedOrderItem().withPlacedOrder(order).withQuantity(2).withProduct(product).build();
+        OrderItem orderItem = OrderItemBuilder.aPlacedOrderItem().withPlacedOrder(order).withQuantity(2).withProduct(product).build();
         orderItemRepository.save(orderItem);
 
         //CHECK

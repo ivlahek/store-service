@@ -31,7 +31,7 @@ public class OrderAsserter {
         assertThat(order.getTotalPrice()).isEqualTo(16.7);
         List<OrderItem> orderItems = order.getOrderItems();
         assertThat(orderItems).hasSize(2);
-        assertThat(extractProperty("product.id").from(orderItems)).containsOnly(
+        assertThat(extractProperty("productId").from(orderItems)).containsOnly(
                 createOrderDto.getOrderItemDtos().get(0).getProductId(),
                 createOrderDto.getOrderItemDtos().get(1).getProductId());
 
@@ -51,7 +51,7 @@ public class OrderAsserter {
     }
 
     private void assertPlacedOrderProduct(OrderItemDto orderItemDto, OrderItem orderItem) {
-        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem.getProduct().getId());
+        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem.getProductId());
         assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem.getQuantity());
 
     }

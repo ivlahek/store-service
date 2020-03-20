@@ -1,3 +1,3 @@
-docker run -d -p 15432:5432 postgres:9.6.9-alpine
-TIMEOUT 10
-java -jar %cd%/store-service-1.0-SNAPSHOT.jar
+call docker run -d -p 15432:5432 postgres:9.6.9-alpine
+call mvn clean install -DskipTests
+java -jar %cd%/store-service/target/store-service-1.0-SNAPSHOT.jar

@@ -21,7 +21,7 @@ public class ProductMapperTest {
 
     @Test
     public void should_map_for_create() {
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto1().build();
 
         //OPERATE
         Product product = productMapper.map(createProductDto);
@@ -57,7 +57,7 @@ public class ProductMapperTest {
     @Test
     public void should_map_for_update() {
         Product product1 = ProductBuilder.aProduct1().build();
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withName("-1").withPrice(BigDecimal.valueOf(-1d)).withSku("-2").build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto1().withName("-1").withPrice(BigDecimal.valueOf(-1d)).withSku("-2").build();
 
         //OPERATE
 

@@ -27,7 +27,7 @@ public class OrderMapper {
         List<OrderItemDto> orderItemDtos = order
                 .getOrderItems()
                 .stream()
-                .map(placedOrderItem -> new OrderItemDto(placedOrderItem.getProduct().getId(), placedOrderItem.getQuantity()))
+                .map(placedOrderItem -> new OrderItemDto(placedOrderItem.getProductId(), placedOrderItem.getQuantity(), BigDecimal.valueOf(placedOrderItem.getProductPrice())))
                 .collect(Collectors.toList());
         orderDto.setOrderItemDtos(orderItemDtos);
         return orderDto;

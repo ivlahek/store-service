@@ -10,8 +10,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductClient {
 
@@ -30,14 +30,20 @@ public class ProductClient {
 
     public List<ProductDto> getPaged(int page, int size) {
         List pageResponse = testRestTemplate.getForEntity(buildForUrl(ProductResourceEndpoints.PRODUCTS, page, size), PageResponseDto.class).getBody().getContent();
-
-        List<ProductDto> productDtos = new ArrayList<>();
-        pageResponse.forEach(o -> productDtos.add(objectMapper.convertValue(o, ProductDto.class)));
-        return productDtos;
+        return (List<ProductDto>) pageResponse.stream().map(object -> objectMapper.convertValue(object, ProductDto.class)).collect(Collectors.toList());
     }
 
     public ProductDto update(Long id, CreateProductDto createProductDto) {
         HttpEntity httpEntity = new HttpEntity(createProductDto);
         return testRestTemplate.exchange(ProductResourceEndpoints.PRODUCTS_BY_ID, HttpMethod.PUT, httpEntity, ProductDto.class, id).getBody();
+    }
+
+    public void deleteProduct(long productId) {
+        testRestTemplate.delete(ProductResourceEndpoints.PRODUCTS_BY_ID, Long.valueOf(productId));
+
+    }
+
+    public ProductDto createProduct(CreateProductDto createProductDto) {
+        return testRestTemplate.postForEntity(ProductResourceEndpoints.PRODUCTS, createProductDto, ProductDto.class).getBody();
     }
 }

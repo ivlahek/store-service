@@ -30,7 +30,6 @@ public interface OrderApiDefinition {
             @ApiResponse(code = 200, message = "Successfully posted an order.", response = OrderDto.class),
             @ApiResponse(code = 500, message = "Provided products can not be found in the database. Error code 3.", response = ErrorMessage.class)
     })
-    @ApiPageable
     OrderDto placeOrder(@Valid @RequestBody @NotNull CreateOrderDto createOrderDto);
 
 
@@ -45,13 +44,13 @@ public interface OrderApiDefinition {
             @Valid @NotNull Pageable pageable,
 
             @RequestParam("dateFrom")
-            @ApiParam("From period of time for which data will be returned")
+            @ApiParam("From period of time for which data will be returned. ISO 8601 is used. Example 2020-01-20T19:15:36.578Z")
             @NotNull(message = ValidationMessages.DATE_FROM_NOT_FOUND)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateFrom,
 
             @NotNull(message = ValidationMessages.DATE_TO_NOT_FOUND)
             @RequestParam("dateTo")
-            @ApiParam("To period of time for which data will be returned")
+            @ApiParam("To period of time for which data will be returned. ISO 8601 is used. Example 2020-04-20T19:15:36.578Z")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateTo);
 
 

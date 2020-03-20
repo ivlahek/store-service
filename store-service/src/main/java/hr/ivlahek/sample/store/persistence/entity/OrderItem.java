@@ -19,9 +19,8 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Column(name = "product_id")
+    private long productId;
 
     @Column(name = "quantity")
     private int quantity;
@@ -29,8 +28,8 @@ public class OrderItem {
     @Column(name = "product_price")
     private double productPrice;
 
-    public OrderItem(Product product, Order order, Integer quantity) {
-        this.product = product;
+    public OrderItem(long productId, Order order, Integer quantity) {
+        this.productId = productId;
         this.order = order;
         this.quantity = quantity;
     }

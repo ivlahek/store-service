@@ -24,7 +24,7 @@ public class ProductServiceTest extends RepositoryTest {
 
     @Test
     public void should_save_product() {
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto1().build();
         //OPERATE
         Product product = productService.create(createProductDto);
 
@@ -37,7 +37,7 @@ public class ProductServiceTest extends RepositoryTest {
     public void should_inform_product_sku_is_taken() {
         Product product = ProductBuilder.aProduct().build();
         productRepository.save(product);
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withSku(product.getSku()).build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto1().withSku(product.getSku()).build();
 
         //OPERATE
         try {

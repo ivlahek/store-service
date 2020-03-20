@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -26,20 +27,16 @@ public class OrderItemService {
         logger.info("Saving information about the items in the order and their quantity!");
         List<OrderItem> listToSave = products
                 .stream()
-                .map(product -> new OrderItem(product, order, quantityPerProduct.get(product.getId())))
+                .map(product -> new OrderItem(product.getId(), order, quantityPerProduct.get(product.getId())))
                 .collect(toList());
         logger.debug("Saving {}!", listToSave);
         orderItemRepository.saveAll(listToSave);
         return listToSave;
     }
 
-    public Map<Long, List<OrderItemDto>> findItemsPerOrder(List<Order> orders) {
+    public  List<OrderItem> findOrderItems(List<Order> orders) {
         logger.info("Fetching data about the products in orders!");
-        List<OrderItem> ordersItems = orderItemRepository.findByOrderIn(orders);
-
-        return ordersItems
-                .stream()
-                .collect(groupingBy(placedOrderProduct -> placedOrderProduct.getOrder().getId(),
-                        mapping(placedOrderProduct -> new OrderItemDto(placedOrderProduct.getProduct().getId(), placedOrderProduct.getQuantity()), toList())));
+        return orderItemRepository.findByOrderIn(orders);
     }
+
 }

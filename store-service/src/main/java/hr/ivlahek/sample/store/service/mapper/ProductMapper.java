@@ -23,6 +23,7 @@ public class ProductMapper {
         Product product = new Product();
         mapCommon(product, createProductDto);
         product.setDateCreated(new Date());
+        product.setCreated();
         return product;
     }
 

@@ -48,19 +48,28 @@ public class ProductService {
     }
 
     public Product update(long productId, CreateProductDto createProductDto) {
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (!optionalProduct.isPresent()) {
-            logger.error("Product with the provided id {} does not exist!", productId);
-            throw new NotFoundException(ExceptionMessage.PRODUCT_DOES_NOT_EXIST);
-        }
+        Product product = findProductById(productId);
 
         Optional<Product> productWithSameName = productRepository.findBySku(createProductDto.getSku());
-        Product product = optionalProduct.get();
         if (productWithSameName.isPresent() && !Objects.equals(product.getId(), productWithSameName.get().getId())) {
             logger.error("Product with the provided name {} already exists!", createProductDto.getName());
             throw new ConflictErrorException(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS);
         }
 
         return new ProductMapper().mapForUpdate(product, createProductDto);
+    }
+
+    private Product findProductById(Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent()) {
+            logger.error("Product with the provided id {} does not exist!", productId);
+            throw new NotFoundException(ExceptionMessage.PRODUCT_DOES_NOT_EXIST);
+        }
+        return optionalProduct.get();
+    }
+
+    public void deleteProduct(long productId) {
+        Product product = findProductById(productId);
+        product.setDeleted();
     }
 }

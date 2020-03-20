@@ -1,6 +1,6 @@
 package hr.ivlahek.sample.store.persistence.entity;
 
-import hr.ivlahek.sample.store.persistence.EntityDefaults;
+import hr.ivlahek.sample.store.client.product.EntityDefaults;
 
 import java.util.Date;
 
@@ -11,6 +11,7 @@ public final class ProductBuilder {
     private String sku = EntityDefaults.Product1Defaults.SKU;
     private Date dateCreated = EntityDefaults.Product1Defaults.DATE_CREATED;
     private Date dateUpdated = EntityDefaults.Product1Defaults.DATE_UPDATED;
+    private boolean deleted = false;
 
     private ProductBuilder() {
     }
@@ -32,6 +33,18 @@ public final class ProductBuilder {
                 .withPrice(EntityDefaults.Product2Defaults.PRICE);
     }
 
+    public static ProductBuilder aDeletedProduct() {
+        return aProduct()
+                .withDateCreated(EntityDefaults.Product3Defaults.DATE_CREATED)
+                .withDateUpdated(EntityDefaults.Product3Defaults.DATE_UPDATED)
+                .withName(EntityDefaults.Product3Defaults.NAME)
+                .withSku(EntityDefaults.Product3Defaults.SKU)
+                .deleted()
+                .withPrice(EntityDefaults.Product3Defaults.PRICE);
+
+    }
+
+
     public ProductBuilder withId(Long id) {
         this.id = id;
         return this;
@@ -42,8 +55,6 @@ public final class ProductBuilder {
         return this;
     }
 
-
-
     public ProductBuilder withPrice(double price) {
         this.price = price;
         return this;
@@ -51,6 +62,11 @@ public final class ProductBuilder {
 
     public ProductBuilder withDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+        return this;
+    }
+
+    public ProductBuilder deleted() {
+        this.deleted = true;
         return this;
     }
 
@@ -63,13 +79,13 @@ public final class ProductBuilder {
         Product product = new Product();
         product.setId(id);
         product.setName(name);
+        product.setDeleted(deleted);
         product.setPrice(price);
         product.setSku(sku);
         product.setDateCreated(dateCreated);
         product.setDateUpdated(dateUpdated);
         return product;
     }
-
 
     public ProductBuilder withSku(String sku) {
         this.sku = sku;

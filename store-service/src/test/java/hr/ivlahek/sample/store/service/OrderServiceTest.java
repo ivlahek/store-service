@@ -2,7 +2,7 @@ package hr.ivlahek.sample.store.service;
 
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderDtoBuilder;
-import hr.ivlahek.sample.store.client.order.OrderItemDtoBuilder;
+import hr.ivlahek.sample.store.client.order.CreateOrderItemDtoBuilder;
 import hr.ivlahek.sample.store.exception.AppException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
@@ -35,8 +35,8 @@ public class OrderServiceTest extends RepositoryTest {
     @Test
     public void should_create_order_with_products() {
         CreateOrderDto createOrderDto = CreateOrderDtoBuilder.aCreateOrderDto()
-                .addOrderItem(OrderItemDtoBuilder.build(product1.getId(), 1))
-                .addOrderItem(OrderItemDtoBuilder.build(product2.getId(), 1))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product1.getId(), 1))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product2.getId(), 1))
                 .build();
 
         //OPERATE
@@ -52,7 +52,7 @@ public class OrderServiceTest extends RepositoryTest {
     @Test
     public void should_inform_no_products_are_selected_in_order() {
         CreateOrderDto createOrderDto = CreateOrderDtoBuilder.aCreateOrderDto()
-                .addOrderItem(OrderItemDtoBuilder.build(-1L, 1))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(-1L, 1))
                 .build();
 
         //OPERATE

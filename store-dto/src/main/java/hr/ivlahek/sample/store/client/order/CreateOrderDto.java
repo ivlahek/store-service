@@ -26,5 +26,5 @@ public class CreateOrderDto {
     @NotNull(message = ValidationMessages.ORDER_ITEM_LIST_NULL)
     @ApiModelProperty(value = DocumentationConstants.PLACED_ORDER_ITEMS, required = true)
     @Valid
-    private List<OrderItemDto> orderItemDtos = new ArrayList<>();
+    private List<CreateOrderItemDto> orderItemDtos = new ArrayList<>();
 }

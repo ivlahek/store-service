@@ -33,7 +33,6 @@ public interface ProductApiDefinition {
             @ApiResponse(code = 404, message = "Product does not exist! Error code 2", response = ErrorMessage.class),
             @ApiResponse(code = 409, message = "Product with the provided name already exists! Error code 1", response = ErrorMessage.class),
     })
-    @ApiPageable
     ProductDto updateProduct(
             @PathVariable("productId") long productId,
             @Valid @RequestBody @NotNull CreateProductDto createProductDto);
@@ -49,4 +48,11 @@ public interface ProductApiDefinition {
             @ApiParam("Paging parameter")
             @NotNull Pageable pageable);
 
+    @DeleteMapping(path = ProductResourceEndpoints.PRODUCTS_BY_ID)
+    @ApiOperation("Delete product identified with id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted a product.", response = Void.class),
+    })
+    void deleteProduct(
+            @PathVariable("productId") long productId);
 }

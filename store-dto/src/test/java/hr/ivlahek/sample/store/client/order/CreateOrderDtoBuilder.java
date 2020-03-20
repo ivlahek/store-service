@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class CreateOrderDtoBuilder {
     private String email = "john.doe@gmail.com";
-    private List<OrderItemDto> productList = new ArrayList<>();
+    private List<CreateOrderItemDto> productList = new ArrayList<>();
 
     private CreateOrderDtoBuilder() {
     }
@@ -19,12 +19,12 @@ public final class CreateOrderDtoBuilder {
         return this;
     }
 
-    public CreateOrderDtoBuilder withProductList(List<OrderItemDto> productList) {
+    public CreateOrderDtoBuilder withProductList(List<CreateOrderItemDto> productList) {
         this.productList = productList;
         return this;
     }
 
-    public CreateOrderDtoBuilder addOrderItem(OrderItemDto orderItemDto) {
+    public CreateOrderDtoBuilder addOrderItem(CreateOrderItemDto orderItemDto) {
         this.productList.add(orderItemDto);
         return this;
     }

@@ -2,7 +2,8 @@ create TABLE public.product (
     id bigint NOT NULL,
     name character varying(255) not NULL,
     sku character varying(255) not NULL unique,
-    price numeric(17, 2),
+    price numeric(17, 2) not null,
+    deleted boolean not null,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL
 );

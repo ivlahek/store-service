@@ -3,6 +3,7 @@ package hr.ivlahek.sample.store.service;
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderDtoBuilder;
 import hr.ivlahek.sample.store.client.order.OrderDto;
+import hr.ivlahek.sample.store.client.order.OrderItemDto;
 import hr.ivlahek.sample.store.persistence.entity.*;
 import hr.ivlahek.sample.store.service.mapper.OrderMapper;
 import org.junit.Before;
@@ -39,15 +40,25 @@ public class OrderMapperTest {
 
     @Test
     public void should_map_to_dto() {
-        Order order = PlacedOrderBuilder.anOrder().withId(1L)
-                .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product1).withQuantity(1).build())
-                .addPlacedOrderItem(PlacedOrderProductBuilder.aPlacedOrderItem().withProduct(product2).withQuantity(2).build())
+        OrderItem placedOrder1 = OrderItemBuilder.aPlacedOrderItem().withProduct(product1).withQuantity(1).build();
+        OrderItem placedOrder2 = OrderItemBuilder.aPlacedOrderItem().withProduct(product2).withQuantity(2).build();
+        Order order = OrderBuilder.anOrder().withId(1L)
+                .addPlacedOrderItem(placedOrder1)
+                .addPlacedOrderItem(placedOrder2)
                 .build();
 
         OrderDto dto = orderMapper.map(order);
 
         assertProductDto(dto, order);
         assertThat(dto.getOrderItemDtos()).hasSize(2);
+        assertPlacedOrderItem(dto.getOrderItemDtos().get(0), placedOrder1);
+        assertPlacedOrderItem(dto.getOrderItemDtos().get(1), placedOrder2);
+    }
+
+    private void assertPlacedOrderItem(OrderItemDto orderItemDto, OrderItem orderItem1) {
+        assertThat(orderItemDto.getOrderItemPrice().doubleValue()).isEqualTo(orderItem1.getProductPrice());
+        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem1.getProductId());
+        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem1.getQuantity());
     }
 
     private void assertProductDto(OrderDto dto, Order order) {

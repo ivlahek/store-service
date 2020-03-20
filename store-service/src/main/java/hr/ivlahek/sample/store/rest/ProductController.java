@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
@@ -51,6 +52,12 @@ public class ProductController implements ProductApiDefinition {
                 .withNumber(products.getNumber())
                 .withNumberOfElements(products.getNumberOfElements())
                 .build();
+    }
+
+    @Override
+    public void deleteProduct( long productId) {
+        logger.info("Deleting product with id {}", productId);
+        productService.deleteProduct(productId);
     }
 
 }

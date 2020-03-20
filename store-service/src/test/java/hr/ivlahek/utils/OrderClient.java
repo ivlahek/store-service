@@ -1,6 +1,7 @@
 package hr.ivlahek.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.OrderDto;
 import hr.ivlahek.sample.store.client.order.OrderResourceEndpoints;
 import hr.ivlahek.sample.store.client.page.PageResponseDto;
@@ -29,5 +30,9 @@ public class OrderClient {
     public List<OrderDto> getPaged(int page, int size, String dateFrom, String dateTo) {
         List pageResponse = testRestTemplate.getForEntity(buildForUrl(OrderResourceEndpoints.ORDERS, page, size, dateFrom, dateTo), PageResponseDto.class).getBody().getContent();
         return (List<OrderDto>) pageResponse.stream().map(o -> objectMapper.convertValue(o, OrderDto.class)).collect(Collectors.toList());
+    }
+
+    public OrderDto createOrder(CreateOrderDto createOrderDto) {
+        return testRestTemplate.postForEntity(OrderResourceEndpoints.ORDERS, createOrderDto, OrderDto.class).getBody();
     }
 }

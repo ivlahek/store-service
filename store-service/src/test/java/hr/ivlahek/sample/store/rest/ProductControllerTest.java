@@ -4,7 +4,6 @@ import hr.ivlahek.asserter.ProductAsserter;
 import hr.ivlahek.sample.store.client.product.CreateProductDto;
 import hr.ivlahek.sample.store.client.product.CreateProductDtoBuilder;
 import hr.ivlahek.sample.store.client.product.ProductDto;
-import hr.ivlahek.sample.store.client.product.ProductResourceEndpoints;
 import hr.ivlahek.sample.store.client.validation.ValidationMessages;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.entity.Product;
@@ -19,6 +18,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ public class ProductControllerTest extends WebApiTest {
 
     @Before
     public void setUp() {
-        createProductDtoBuilder = CreateProductDtoBuilder.aCreateProductDto();
+        createProductDtoBuilder = CreateProductDtoBuilder.aCreateProductDto1();
         badRequestAsserter = BadRequestAsserterFactory.createForProductResource(testRestTemplate);
         productClient = new ProductClient(testRestTemplate);
     }
@@ -106,7 +106,7 @@ public class ProductControllerTest extends WebApiTest {
         CreateProductDto createProductDto = createProductDtoBuilder.build();
 
         //OPERATE
-        ProductDto productDto = testRestTemplate.postForEntity(ProductResourceEndpoints.PRODUCTS, createProductDto, ProductDto.class).getBody();
+        ProductDto productDto = productClient.createProduct(createProductDto);
 
         //CHECK
         Product product = productRepository.findById(productDto.getId()).get();
@@ -190,5 +190,19 @@ public class ProductControllerTest extends WebApiTest {
         //CHECK
         assertThat(paged).hasSize(1);
         assertThat(paged.get(0).getId()).isEqualTo(product2.getId());
+    }
+
+    @Test
+    public void should_delete_product() {
+        Product product1 = ProductBuilder.aProduct1().build();
+        productRepository.save(product1);
+
+        //OPERATE
+        productClient.deleteProduct(product1.getId());
+
+        //CHECK
+        Optional<Product> optionalProduct = productRepository.findById(product1.getId());
+        assertThat(optionalProduct).isNotPresent();
+
     }
 }

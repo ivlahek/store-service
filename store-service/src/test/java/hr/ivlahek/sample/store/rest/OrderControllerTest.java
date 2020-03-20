@@ -43,19 +43,19 @@ public class OrderControllerTest extends WebApiTest {
 
         orderClient = new OrderClient(testRestTemplate);
 
-        order1 = PlacedOrderBuilder.anOrder1().build();
+        order1 = OrderBuilder.anOrder1().build();
         orderRepository.save(order1);
 
-        OrderItem orderItem1 = PlacedOrderProductBuilder
+        OrderItem orderItem1 = OrderItemBuilder
                 .aPlacedOrderItem()
                 .withProduct(product1)
                 .withPlacedOrder(order1).build();
         orderItemRepository.save(orderItem1);
 
-        order2 = PlacedOrderBuilder.anOrder1().build();
+        order2 = OrderBuilder.anOrder1().build();
         orderRepository.save(order2);
 
-        OrderItem orderItem2 = PlacedOrderProductBuilder.aPlacedOrderItem()
+        OrderItem orderItem2 = OrderItemBuilder.aPlacedOrderItem()
                 .withProduct(product2)
                 .withPlacedOrder(order2).build();
         orderItemRepository.save(orderItem2);
@@ -104,7 +104,7 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_inform_order_item_quantity_is_negative() {
         orderBadRequestAsserter
-                .executePost(createOrderDtoBuilder.addOrderItem(OrderItemDtoBuilder.build(1L, -1)).build())
+                .executePost(createOrderDtoBuilder.addOrderItem(CreateOrderItemDtoBuilder.build(1L, -1)).build())
                 .assertBadRequest()
                 .assertWithMessage(ValidationMessages.ORDER_ITEM_QUANTITY_NEGATIVE_NUMBER);
     }
@@ -112,7 +112,7 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_inform_order_item_list_is_empty() {
         orderBadRequestAsserter
-                .executePost(createOrderDtoBuilder.addOrderItem(OrderItemDtoBuilder.build(-1L, 10)).build())
+                .executePost(createOrderDtoBuilder.addOrderItem(CreateOrderItemDtoBuilder.build(-1L, 10)).build())
                 .assertInternalServerError()
                 .assertWithMessage(ExceptionMessage.PRODUCT_CART_EMPTY);
     }
@@ -120,7 +120,7 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_inform_order_item_quantity_is_null() {
         orderBadRequestAsserter
-                .executePost(createOrderDtoBuilder.addOrderItem(OrderItemDtoBuilder.build(1L, null)).build())
+                .executePost(createOrderDtoBuilder.addOrderItem(CreateOrderItemDtoBuilder.build(1L, null)).build())
                 .assertBadRequest()
                 .assertWithMessage(ValidationMessages.ORDER_ITEM_QUANTITY_NULL);
     }
@@ -128,7 +128,7 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_inform_order_item_product_id_is_null() {
         orderBadRequestAsserter
-                .executePost(createOrderDtoBuilder.addOrderItem(OrderItemDtoBuilder.build(null, 1)).build())
+                .executePost(createOrderDtoBuilder.addOrderItem(CreateOrderItemDtoBuilder.build(null, 1)).build())
                 .assertBadRequest()
                 .assertWithMessage(ValidationMessages.PRODUCT_ID_NULL);
     }
@@ -136,13 +136,13 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_create_an_order() {
         CreateOrderDto createOrderDto = CreateOrderDtoBuilder.aCreateOrderDto()
-                .addOrderItem(OrderItemDtoBuilder.build(product1.getId(), 3))
-                .addOrderItem(OrderItemDtoBuilder.build(product2.getId(), 2))
-                .addOrderItem(OrderItemDtoBuilder.build(-1L, 10))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product1.getId(), 3))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product2.getId(), 2))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(-1L, 10))
                 .build();
 
         //OPERATE
-        OrderDto orderDto = testRestTemplate.postForEntity(OrderResourceEndpoints.ORDERS, createOrderDto, OrderDto.class).getBody();
+        OrderDto orderDto = orderClient.createOrder(createOrderDto);
 
         //CHECK
         orderAsserter.assertOrders(orderDto.getId(), createOrderDto);
@@ -152,9 +152,9 @@ public class OrderControllerTest extends WebApiTest {
     @Test
     public void should_create_an_order_with_same_products_as_a_separate_order_items() {
         CreateOrderDto createOrderDto = CreateOrderDtoBuilder.aCreateOrderDto()
-                .addOrderItem(OrderItemDtoBuilder.build(product1.getId(), 3))
-                .addOrderItem(OrderItemDtoBuilder.build(product2.getId(), 1))
-                .addOrderItem(OrderItemDtoBuilder.build(product2.getId(), 1))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product1.getId(), 3))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product2.getId(), 1))
+                .addOrderItem(CreateOrderItemDtoBuilder.build(product2.getId(), 1))
                 .build();
 
         //OPERATE
@@ -202,5 +202,24 @@ public class OrderControllerTest extends WebApiTest {
         //CHECK
         assertThat(page).hasSize(1);
         orderAsserter.assertAgainst(page.get(0), order2.getId());
+    }
+
+    @Test
+    public void should_get_orders_even_if_product_were_deleted() {
+        //BUILD
+        product1.setDeleted();
+        productRepository.save(product1);
+        product2.setDeleted();
+        productRepository.save(product2);
+
+        //OPERATE
+        String dateFrom = DateTimeFormatter.ISO_DATE_TIME.format(Instant.now().minusSeconds(150).atZone(ZoneId.of("UTC")));
+        String dateTo = DateTimeFormatter.ISO_DATE_TIME.format(Instant.now().plusSeconds(150).atZone(ZoneId.of("UTC")));
+        List<OrderDto> page = orderClient.getPaged(0, 20, dateFrom, dateTo);
+
+        //CHECK
+        assertThat(page).hasSize(2);
+        orderAsserter.assertAgainst(page.get(0), order1.getId());
+        orderAsserter.assertAgainst(page.get(1), order2.getId());
     }
 }

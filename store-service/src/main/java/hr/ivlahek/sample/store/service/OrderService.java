@@ -1,6 +1,7 @@
 package hr.ivlahek.sample.store.service;
 
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
+import hr.ivlahek.sample.store.client.order.CreateOrderItemDto;
 import hr.ivlahek.sample.store.client.order.OrderItemDto;
 import hr.ivlahek.sample.store.exception.InternalServerErrorException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
@@ -38,7 +39,7 @@ public class OrderService {
         logger.info("Place order method called {}", createOrderDto);
         List<Long> productIds = createOrderDto.getOrderItemDtos()
                 .stream()
-                .map(OrderItemDto::getProductId)
+                .map(CreateOrderItemDto::getProductId)
                 .collect(Collectors.toList());
 
         List<Product> products = productService.findByIds(productIds);
@@ -48,7 +49,7 @@ public class OrderService {
         }
         Map<Long, Integer> quantityMapPerProduct = createOrderDto.getOrderItemDtos()
                 .stream()
-                .collect(Collectors.toMap(OrderItemDto::getProductId, OrderItemDto::getQuantity, Integer::sum));
+                .collect(Collectors.toMap(CreateOrderItemDto::getProductId, CreateOrderItemDto::getQuantity, Integer::sum));
         double price = new PriceCalculator().calculate(quantityMapPerProduct, products);
         logger.debug("Order price is {}", price);
 

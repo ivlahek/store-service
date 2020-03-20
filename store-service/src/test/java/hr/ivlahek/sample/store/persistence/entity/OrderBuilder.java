@@ -1,59 +1,59 @@
 package hr.ivlahek.sample.store.persistence.entity;
 
-import hr.ivlahek.sample.store.persistence.EntityDefaults;
+import hr.ivlahek.sample.store.client.product.EntityDefaults;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public final class PlacedOrderBuilder {
+public final class OrderBuilder {
     private Long id;
     private String email = EntityDefaults.PlacedOrder1Defaults.EMAIL;
     private double totalPrice = EntityDefaults.PlacedOrder1Defaults.TOTAL_PRICE;
     private Date dateCreated = EntityDefaults.PlacedOrder1Defaults.DATE_CREATED;
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private PlacedOrderBuilder() {
+    private OrderBuilder() {
     }
 
-    public static PlacedOrderBuilder anOrder() {
-        return new PlacedOrderBuilder();
+    public static OrderBuilder anOrder() {
+        return new OrderBuilder();
     }
 
-    public static PlacedOrderBuilder anOrder1() {
-        return new PlacedOrderBuilder();
+    public static OrderBuilder anOrder1() {
+        return new OrderBuilder();
     }
 
 
-    public static PlacedOrderBuilder anOrder2() {
-        return new PlacedOrderBuilder()
+    public static OrderBuilder anOrder2() {
+        return new OrderBuilder()
                 .withEmail(EntityDefaults.PlacedOrder2Defaults.EMAIL)
                 .withTotalPrice(EntityDefaults.PlacedOrder2Defaults.TOTAL_PRICE)
                 .withDateCreated(EntityDefaults.PlacedOrder2Defaults.DATE_CREATED);
     }
 
 
-    public PlacedOrderBuilder withId(Long id) {
+    public OrderBuilder withId(Long id) {
         this.id = id;
         return this;
     }
 
-    public PlacedOrderBuilder withEmail(String email) {
+    public OrderBuilder withEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public PlacedOrderBuilder withTotalPrice(double totalPrice) {
+    public OrderBuilder withTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
         return this;
     }
 
-    public PlacedOrderBuilder withDateCreated(Date dateCreated) {
+    public OrderBuilder withDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
         return this;
     }
 
-    public PlacedOrderBuilder withPlacedOrderItems(List<OrderItem> orderItems) {
+    public OrderBuilder withPlacedOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
         return this;
     }
@@ -68,7 +68,7 @@ public final class PlacedOrderBuilder {
         return order;
     }
 
-    public PlacedOrderBuilder addPlacedOrderItem(OrderItem placedOrder) {
+    public OrderBuilder addPlacedOrderItem(OrderItem placedOrder) {
         this.orderItems.add(placedOrder);
         return this;
     }
