@@ -21,5 +21,11 @@
         <module>store-dto</module>
     </modules>
 
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>ivlahek</name>
+            <url>https://maven.pkg.github.com/ivlahek/store-service</url>
+        </repository>
+    </distributionManagement>
 </project>
