@@ -2,7 +2,7 @@
 ## Running a store service
 You will need maven and docker installed locally on your computer in order to run the service with the following script
 
-`run-script.bat` 
+`run-script.bat` or `run-script.sh`
 - will run postgres SQL database in docker on 15432 port 
 - will build application using maven
 - will run application on a port 8080
