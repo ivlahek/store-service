@@ -279,10 +279,10 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <name>postgres:9.6</name>
+                                    <name>postgres:9.6.9-alpine</name>
                                     <alias>postgres-${project.name}</alias>
                                     <build>
-                                        <from>postgres:9.6</from>
+                                        <from>postgres:9.6.9-alpine</from>
                                         <tags>
                                             <tag>${project.artifactId}-${project.version}</tag>
                                         </tags>
