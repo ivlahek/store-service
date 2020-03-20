@@ -13,10 +13,10 @@ public class ProductDto {
 
     @ApiModelProperty(name = DocumentationConstants.PRODUCT_ID)
     private Long id;
+    @ApiModelProperty(name = DocumentationConstants.PRODUCT_SKU)
+    private String productSku;
     @ApiModelProperty(name = DocumentationConstants.PRODUCT_NAME)
     private String name;
-    @ApiModelProperty(name = DocumentationConstants.PRODUCT_DESCRIPTION)
-    private String description;
     @ApiModelProperty(name = DocumentationConstants.PRODUCT_PRICE)
     private BigDecimal price;
 

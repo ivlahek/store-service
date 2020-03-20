@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ProductMapper {
     public ProductDto map(Product product) {
         ProductDto productDto = new ProductDto();
-        productDto.setDescription(product.getDescription());
+        productDto.setProductSku(product.getSku());
         productDto.setName(product.getName());
         productDto.setPrice(BigDecimal.valueOf(product.getPrice()));
         productDto.setId(product.getId());
@@ -27,7 +27,7 @@ public class ProductMapper {
     }
 
     private Product mapCommon(Product product, CreateProductDto createProductDto) {
-        product.setDescription(createProductDto.getDescription());
+        product.setSku(createProductDto.getSku());
         product.setName(createProductDto.getName());
         product.setPrice(createProductDto.getPrice().doubleValue());
         product.setDateUpdated(new Date());

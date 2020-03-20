@@ -20,10 +20,10 @@ public class CreateProductDto {
     @ApiModelProperty(value = DocumentationConstants.PRODUCT_NAME, required = true)
     private String name;
 
-    @NotNull(message = ValidationMessages.PRODUCT_DESCRIPTION_NULL)
-    @NotEmpty(message = ValidationMessages.PRODUCT_DESCRIPTION_EMPTY)
-    @ApiModelProperty(value = DocumentationConstants.PRODUCT_DESCRIPTION, required = true)
-    private String description;
+    @NotNull(message = ValidationMessages.PRODUCT_SKU_NULL)
+    @NotEmpty(message = ValidationMessages.PRODUCT_SKU_EMPTY)
+    @ApiModelProperty(value = DocumentationConstants.PRODUCT_SKU, required = true)
+    private String sku;
 
     @NotNull(message = ValidationMessages.PRODUCT_PRICE_NULL)
     @Positive(message = ValidationMessages.PRODUCT_PRICE_NEGATIVE_OR_ZERO)

@@ -8,7 +8,7 @@ public final class ProductBuilder {
     private Long id;
     private String name = EntityDefaults.Product1Defaults.NAME;
     private double price = EntityDefaults.Product1Defaults.PRICE;
-    private String description = EntityDefaults.Product1Defaults.DESCRIPTION;
+    private String sku = EntityDefaults.Product1Defaults.SKU;
     private Date dateCreated = EntityDefaults.Product1Defaults.DATE_CREATED;
     private Date dateUpdated = EntityDefaults.Product1Defaults.DATE_UPDATED;
 
@@ -28,6 +28,7 @@ public final class ProductBuilder {
                 .withDateCreated(EntityDefaults.Product2Defaults.DATE_CREATED)
                 .withDateUpdated(EntityDefaults.Product2Defaults.DATE_UPDATED)
                 .withName(EntityDefaults.Product2Defaults.NAME)
+                .withSku(EntityDefaults.Product2Defaults.SKU)
                 .withPrice(EntityDefaults.Product2Defaults.PRICE);
     }
 
@@ -40,6 +41,8 @@ public final class ProductBuilder {
         this.name = name;
         return this;
     }
+
+
 
     public ProductBuilder withPrice(double price) {
         this.price = price;
@@ -61,9 +64,16 @@ public final class ProductBuilder {
         product.setId(id);
         product.setName(name);
         product.setPrice(price);
-        product.setDescription(description);
+        product.setSku(sku);
         product.setDateCreated(dateCreated);
         product.setDateUpdated(dateUpdated);
         return product;
     }
+
+
+    public ProductBuilder withSku(String sku) {
+        this.sku = sku;
+        return this;
+    }
+
 }

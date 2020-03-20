@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public final class CreateProductDtoBuilder {
     private String name = "name";
-    private String description = "description";
+    private String sku = "sku";
     private BigDecimal price = BigDecimal.valueOf(2.3d);
 
     private CreateProductDtoBuilder() {
@@ -19,8 +19,8 @@ public final class CreateProductDtoBuilder {
         return this;
     }
 
-    public CreateProductDtoBuilder withDescription(String description) {
-        this.description = description;
+    public CreateProductDtoBuilder withSku(String sku) {
+        this.sku = sku;
         return this;
     }
 
@@ -32,7 +32,7 @@ public final class CreateProductDtoBuilder {
     public CreateProductDto build() {
         CreateProductDto createProductDto = new CreateProductDto();
         createProductDto.setName(name);
-        createProductDto.setDescription(description);
+        createProductDto.setSku(sku);
         createProductDto.setPrice(price);
         return createProductDto;
     }

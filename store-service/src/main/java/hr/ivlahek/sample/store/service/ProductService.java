@@ -27,10 +27,10 @@ public class ProductService {
 
     public Product create(CreateProductDto createProductDto) {
         logger.info("Create product {}", createProductDto);
-        Optional<Product> optionalProduct = productRepository.findByName(createProductDto.getName());
+        Optional<Product> optionalProduct = productRepository.findBySku(createProductDto.getSku());
         if (optionalProduct.isPresent()) {
             logger.error("Product with the provided name {} already exists!", createProductDto.getName());
-            throw new ConflictErrorException(ExceptionMessage.PRODUCT_NAME_ALREADY_EXISTS);
+            throw new ConflictErrorException(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS);
         }
         Product product = new ProductMapper().map(createProductDto);
         logger.debug("Product mapped {}", product);
@@ -54,11 +54,11 @@ public class ProductService {
             throw new NotFoundException(ExceptionMessage.PRODUCT_DOES_NOT_EXIST);
         }
 
-        Optional<Product> productWithSameName = productRepository.findByName(createProductDto.getName());
+        Optional<Product> productWithSameName = productRepository.findBySku(createProductDto.getSku());
         Product product = optionalProduct.get();
         if (productWithSameName.isPresent() && !Objects.equals(product.getId(), productWithSameName.get().getId())) {
             logger.error("Product with the provided name {} already exists!", createProductDto.getName());
-            throw new ConflictErrorException(ExceptionMessage.PRODUCT_NAME_ALREADY_EXISTS);
+            throw new ConflictErrorException(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS);
         }
 
         return new ProductMapper().mapForUpdate(product, createProductDto);

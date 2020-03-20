@@ -4,8 +4,8 @@ public class ValidationMessages {
     public static final String PRODUCT_NAME_EMPTY = "Product name is empty!";
     public static final String PRODUCT_NAME_NULL = "Product name is null!";
 
-    public static final String PRODUCT_DESCRIPTION_EMPTY = "Product description is empty!";
-    public static final String PRODUCT_DESCRIPTION_NULL = "Product description is null!";
+    public static final String PRODUCT_SKU_EMPTY = "Product SKU is empty!";
+    public static final String PRODUCT_SKU_NULL = "Product SKU is null!";
     public static final String PRODUCT_PRICE_NULL = "Product price is null!";
     public static final String PRODUCT_PRICE_NEGATIVE_OR_ZERO = "Product price must be positive!";
 

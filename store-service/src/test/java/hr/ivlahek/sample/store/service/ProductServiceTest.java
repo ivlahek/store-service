@@ -34,17 +34,17 @@ public class ProductServiceTest extends RepositoryTest {
     }
 
     @Test
-    public void should_inform_product_name_is_taken() {
+    public void should_inform_product_sku_is_taken() {
         Product product = ProductBuilder.aProduct().build();
         productRepository.save(product);
-        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withName(product.getName()).build();
+        CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto().withSku(product.getSku()).build();
 
         //OPERATE
         try {
             productService.create(createProductDto);
             failBecauseExceptionWasNotThrown(AppException.class);
         } catch (AppException e) {
-            assertThat(e.getCode()).isEqualTo(ExceptionMessage.PRODUCT_NAME_ALREADY_EXISTS.getErrorCode());
+            assertThat(e.getCode()).isEqualTo(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS.getErrorCode());
         }
     }
 

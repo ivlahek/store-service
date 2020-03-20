@@ -55,17 +55,17 @@ public class ProductControllerTest extends WebApiTest {
     @Test
     public void should_inform_description_is_empty() {
         badRequestAsserter
-                .executePost(createProductDtoBuilder.withDescription("").build())
+                .executePost(createProductDtoBuilder.withSku("").build())
                 .assertBadRequest()
-                .assertWithMessage(ValidationMessages.PRODUCT_DESCRIPTION_EMPTY);
+                .assertWithMessage(ValidationMessages.PRODUCT_SKU_EMPTY);
     }
 
     @Test
     public void should_inform_description_is_null() {
         badRequestAsserter
-                .executePost(createProductDtoBuilder.withDescription(null).build())
+                .executePost(createProductDtoBuilder.withSku(null).build())
                 .assertBadRequest()
-                .assertWithMessage(ValidationMessages.PRODUCT_DESCRIPTION_NULL);
+                .assertWithMessage(ValidationMessages.PRODUCT_SKU_NULL);
     }
 
     @Test
@@ -120,9 +120,9 @@ public class ProductControllerTest extends WebApiTest {
         Product product = ProductBuilder.aProduct1().build();
         productRepository.save(product);
 
-        badRequestAsserter.executePost(createProductDtoBuilder.withName(product.getName()).build())
+        badRequestAsserter.executePost(createProductDtoBuilder.withSku(product.getSku()).build())
                 .assertConflict()
-                .assertWithMessage(ExceptionMessage.PRODUCT_NAME_ALREADY_EXISTS);
+                .assertWithMessage(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class ProductControllerTest extends WebApiTest {
 
         CreateProductDto createProductDto = createProductDtoBuilder
                 .withName(product2.getName())
-                .withDescription(product2.getDescription())
+                .withSku(product2.getSku())
                 .withPrice(BigDecimal.valueOf(product.getPrice())).build();
 
         //OPERATE
@@ -153,13 +153,13 @@ public class ProductControllerTest extends WebApiTest {
 
         CreateProductDto createProductDto = createProductDtoBuilder
                 .withName(product2.getName())
-                .withDescription(product2.getDescription())
+                .withSku(product2.getSku())
                 .withPrice(BigDecimal.valueOf(product1.getPrice())).build();
 
         //OPERATE
         BadRequestAsserterFactory.createForProductIdResource(testRestTemplate).executePut(createProductDto, product1.getId())
                 .assertConflict()
-                .assertWithMessage(ExceptionMessage.PRODUCT_NAME_ALREADY_EXISTS);
+                .assertWithMessage(ExceptionMessage.PRODUCT_SKU_ALREADY_EXISTS);
     }
 
     @Test
