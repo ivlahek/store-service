@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProductClient {
@@ -29,12 +30,12 @@ public class ProductClient {
     }
 
     public List<ProductDto> getPaged(int page, int size) {
-        List pageResponse = testRestTemplate.getForEntity(buildForUrl(ProductResourceEndpoints.PRODUCTS, page, size), PageResponseDto.class).getBody().getContent();
-        return (List<ProductDto>) pageResponse.stream().map(object -> objectMapper.convertValue(object, ProductDto.class)).collect(Collectors.toList());
+        List<Map> pageResponse = testRestTemplate.getForEntity(buildForUrl(ProductResourceEndpoints.PRODUCTS, page, size), PageResponseDto.class).getBody().getContent();
+        return pageResponse.stream().map(object -> objectMapper.convertValue(object, ProductDto.class)).collect(Collectors.toList());
     }
 
     public ProductDto update(Long id, CreateProductDto createProductDto) {
-        HttpEntity httpEntity = new HttpEntity(createProductDto);
+        HttpEntity<CreateProductDto> httpEntity = new HttpEntity<>(createProductDto);
         return testRestTemplate.exchange(ProductResourceEndpoints.PRODUCTS_BY_ID, HttpMethod.PUT, httpEntity, ProductDto.class, id).getBody();
     }
 

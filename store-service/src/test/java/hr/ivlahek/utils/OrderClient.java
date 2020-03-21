@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OrderClient {
@@ -28,8 +29,8 @@ public class OrderClient {
     }
 
     public List<OrderDto> getPaged(int page, int size, String dateFrom, String dateTo) {
-        List pageResponse = testRestTemplate.getForEntity(buildForUrl(OrderResourceEndpoints.ORDERS, page, size, dateFrom, dateTo), PageResponseDto.class).getBody().getContent();
-        return (List<OrderDto>) pageResponse.stream().map(o -> objectMapper.convertValue(o, OrderDto.class)).collect(Collectors.toList());
+        List<Map> pageResponse = testRestTemplate.getForEntity(buildForUrl(OrderResourceEndpoints.ORDERS, page, size, dateFrom, dateTo), PageResponseDto.class).getBody().getContent();
+        return pageResponse.stream().map(o -> objectMapper.convertValue(o, OrderDto.class)).collect(Collectors.toList());
     }
 
     public OrderDto createOrder(CreateOrderDto createOrderDto) {

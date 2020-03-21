@@ -51,7 +51,7 @@ public class OrderService {
                 .stream()
                 .collect(Collectors.toMap(CreateOrderItemDto::getProductId, CreateOrderItemDto::getQuantity, Integer::sum));
         double price = new PriceCalculator().calculate(quantityMapPerProduct, products);
-        logger.debug("Order price is {}", price);
+        logger.info("Order price is {}", price);
 
         Order order = orderRepository.save(new OrderMapper().map(createOrderDto, price));
         logger.info("Order saved {}!", order);

@@ -19,12 +19,12 @@ public class CreateOrderDto {
     @NotNull(message = ValidationMessages.ORDER_EMAIL_IS_NULL)
     @NotEmpty(message = ValidationMessages.ORDER_EMAIL_IS_EMPTY)
     @Email(message = ValidationMessages.ORDER_NOT_A_VALID_EMAIL)
-    @ApiModelProperty(value = DocumentationConstants.PLACED_ORDER_EMAIL, required = true)
+    @ApiModelProperty(value = DocumentationConstants.ORDER_EMAIL, required = true)
     private String email;
 
     @NotEmpty(message = ValidationMessages.ORDER_ITEM_LIST_EMPTY)
     @NotNull(message = ValidationMessages.ORDER_ITEM_LIST_NULL)
-    @ApiModelProperty(value = DocumentationConstants.PLACED_ORDER_ITEMS, required = true)
+    @ApiModelProperty(value = DocumentationConstants.ORDER_ITEMS, required = true)
     @Valid
     private List<CreateOrderItemDto> orderItemDtos = new ArrayList<>();
 }

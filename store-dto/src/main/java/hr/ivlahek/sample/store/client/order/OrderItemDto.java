@@ -15,13 +15,13 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class OrderItemDto {
-    @ApiModelProperty(value = DocumentationConstants.ORDER_ITEM_PRODUCT_ID, required = true)
+    @ApiModelProperty(value = DocumentationConstants.ORDER_ITEM_ID, required = true)
     @NotNull(message = ValidationMessages.PRODUCT_ID_NULL)
     private Long productId;
 
     @NotNull(message = ValidationMessages.ORDER_ITEM_QUANTITY_NULL)
     @Positive(message = ValidationMessages.ORDER_ITEM_QUANTITY_NEGATIVE_NUMBER)
-    @ApiModelProperty(value = DocumentationConstants.ORDER_ITEM_PRODUCT_QUANTITY, required = true)
+    @ApiModelProperty(value = DocumentationConstants.ORDER_ITEM_QUANTITY, required = true)
     private Integer quantity;
 
     @ApiModelProperty(value = DocumentationConstants.ORDER_ITEM_PRICE, required = true)
