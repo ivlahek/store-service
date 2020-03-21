@@ -11,7 +11,7 @@ Run the following script to build and run the service:
 ## Running the service manually (Postgres Database necessary)
 If you don't have maven and docker installed locally on your computer you can download the application from:
 `https://github.com/ivlahek/store-service/packages/158317`
-You will need a postgres database listening on a port 15432. One can be ran in docker `docker run -d -p 15432:5432 postgres:9.6.9-alpine`
+You will need a postgres database listening on a port 15432. One can be run in docker `docker run -d -p 15432:5432 postgres:9.6.9-alpine`
 
 The application by default:
 - is listening on a port 8080
@@ -21,10 +21,10 @@ The application by default:
 ## API - documentation
 - API documentation is available on http://localhost:8080/swagger-ui.html
 
-## Maven build 
+## Maven build (Docker necessary)
 - maven build can be run the build (including unit and integration tests) with the command `mvn clean install -Pjenkins`
 - maven build will in test phase run unit tests
-- maven build will in pre-integration phase run postgres database on a random port
+- maven build will in pre-integration phase run Pstgres database on a random port
 - maven build will in integration phase run integration tests against database
 
 ## Local testing
