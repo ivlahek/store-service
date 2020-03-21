@@ -75,5 +75,6 @@ public class UatTest extends WebApiTest {
         orders = orderClient.getPaged(0, 20, dateFrom, dateTo);
         assertThat(orders).hasSize(1);
         assertThat(orders.get(0)).isEqualToComparingFieldByField(orderDto);
+
     }
 }

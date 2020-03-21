@@ -27,7 +27,7 @@ public class OrderItemService {
         logger.info("Saving information about the items in the order and their quantity!");
         List<OrderItem> listToSave = products
                 .stream()
-                .map(product -> new OrderItem(product.getId(), order, quantityPerProduct.get(product.getId())))
+                .map(product -> new OrderItem( order, product.getId(), quantityPerProduct.get(product.getId()), product.getPrice()))
                 .collect(toList());
         logger.debug("Saving {}!", listToSave);
         orderItemRepository.saveAll(listToSave);

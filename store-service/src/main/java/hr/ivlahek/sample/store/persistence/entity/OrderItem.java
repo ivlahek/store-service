@@ -28,10 +28,10 @@ public class OrderItem {
     @Column(name = "product_price")
     private double productPrice;
 
-    public OrderItem(long productId, Order order, Integer quantity) {
-        this.productId = productId;
+    public OrderItem(Order order, long productId, int quantity, double productPrice) {
         this.order = order;
+        this.productId = productId;
         this.quantity = quantity;
+        this.productPrice = productPrice;
     }
-
 }

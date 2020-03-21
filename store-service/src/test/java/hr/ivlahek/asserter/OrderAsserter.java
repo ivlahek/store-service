@@ -53,6 +53,7 @@ public class OrderAsserter {
     private void assertPlacedOrderProduct(OrderItemDto orderItemDto, OrderItem orderItem) {
         assertThat(orderItemDto.getProductId()).isEqualTo(orderItem.getProductId());
         assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem.getQuantity());
+        assertThat(orderItemDto.getOrderItemPrice().doubleValue()).isEqualTo(orderItem.getProductPrice()).isNotZero();
 
     }
 }

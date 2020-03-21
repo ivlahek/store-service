@@ -57,15 +57,15 @@ public class OrderMapperTest {
 
     private void assertPlacedOrderItem(OrderItemDto orderItemDto, OrderItem orderItem1) {
         assertThat(orderItemDto.getOrderItemPrice().doubleValue()).isEqualTo(orderItem1.getProductPrice());
-        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem1.getProductId());
-        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem1.getQuantity());
+        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem1.getProductId()).isNotZero();
+        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem1.getQuantity()).isNotZero();
     }
 
     private void assertProductDto(OrderDto dto, Order order) {
         assertThat(dto.getDateCreated()).isEqualTo(order.getDateCreated());
         assertThat(dto.getEmail()).isEqualTo(order.getEmail());
         assertThat(dto.getId()).isEqualTo(order.getId()).isNotNull();
-        assertThat(dto.getTotalPrice().doubleValue()).isEqualTo(order.getTotalPrice());
+        assertThat(dto.getTotalPrice().doubleValue()).isEqualTo(order.getTotalPrice()).isNotZero();
     }
 
 }

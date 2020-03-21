@@ -71,5 +71,6 @@ public class ProductService {
     public void deleteProduct(long productId) {
         Product product = findProductById(productId);
         product.setDeleted();
+        productRepository.save(product);
     }
 }
