@@ -9,7 +9,7 @@ Run the following script to build and run the service:
 - will run the application on a port 8080
 
 ## Running the service manually (Postgres Database necessary)
-If you don't have maven and docker installed locally on your computer you can download the application (1.0.0 version) from:
+If you don't have maven and docker installed locally on your computer you can download the application (store-service-1.0.0.jar) from:
 `https://github.com/ivlahek/store-service/packages/158317`
 
 You will need a postgres database listening on a port 15432. 
