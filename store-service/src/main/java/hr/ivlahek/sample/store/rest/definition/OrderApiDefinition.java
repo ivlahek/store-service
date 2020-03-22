@@ -44,13 +44,13 @@ public interface OrderApiDefinition {
             @Valid @NotNull Pageable pageable,
 
             @RequestParam("dateFrom")
-            @ApiParam("From period of time for which data will be returned. ISO 8601 is used. Example 2020-01-20T19:15:36.578Z")
+            @ApiParam(value = "From period of time for which data will be returned. ISO 8601 is used. Example 2020-01-20T19:15:36.578Z", required = true)
             @NotNull(message = ValidationMessages.DATE_FROM_NOT_FOUND)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateFrom,
 
             @NotNull(message = ValidationMessages.DATE_TO_NOT_FOUND)
             @RequestParam("dateTo")
-            @ApiParam("To period of time for which data will be returned. ISO 8601 is used. Example 2020-04-20T19:15:36.578Z")
+            @ApiParam(value = "To period of time for which data will be returned. ISO 8601 is used. Example 2020-04-20T19:15:36.578Z", required = true)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date dateTo);
 
 
