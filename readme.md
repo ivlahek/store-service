@@ -9,7 +9,7 @@ Run the following script to build and run the service:
 - will run the application on a port 8080
 
 ## Running the service manually (Postgres Database necessary)
-If you don't have maven and docker installed locally on your computer you can download the application (store-service-1.0.1.jar) from:
+If you don't have maven and docker installed locally on your computer you can download the application (store-service-1.0.4.jar) from:
 `https://github.com/ivlahek/store-service/packages/158317`
 
 You will need a postgres database listening on a port 15432. 
@@ -18,7 +18,7 @@ One can be run in docker `docker run -d -p 15432:5432 postgres:9.6.9-alpine`
 The application by default:
 - is listening on a port 8080
 - needs postgres database listening on a port 15432
-- can be run `java -jar store-service-1.0.1.jar`
+- can be run `java -jar store-service-1.0.4.jar`
 
 ## API - documentation
 - API documentation is available on http://localhost:8080/swagger-ui.html
