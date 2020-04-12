@@ -28,30 +28,17 @@ public class ProductController implements ProductApiDefinition {
 
     public ProductDto createProduct(CreateProductDto createProductDto) {
         logger.info("Create product api called {}", createProductDto);
-        return new ProductMapper().map(productService.create(createProductDto));
+        return productService.create(createProductDto);
     }
 
     public ProductDto updateProduct(long productId, CreateProductDto createProductDto) {
         logger.info("Update product {} called {}", productId, createProductDto);
-        return new ProductMapper().map(productService.update(productId, createProductDto));
+        return productService.update(productId, createProductDto);
     }
 
     public PageResponseDto<ProductDto> getAllProducts(@NotNull Pageable pageable) {
         logger.info("Create mobile application api called {}", pageable);
-        Page<Product> products = productService.getProducts(pageable);
-        return PageResponseDto.PageResponseDtoBuilder.aPageResponseDto()
-                .withContent(new ProductMapper().map(products.getContent()))
-                .withFirst(products.isFirst())
-                .withLast(products.isLast())
-                .withNextPage(products.hasNext())
-                .withSize(products.getSize())
-                .withTotalElements(products.getTotalElements())
-                .withTotalPages(products.getTotalPages())
-                .withPreviousPage(products.hasPrevious())
-                .withPreviousPage(products.hasContent())
-                .withNumber(products.getNumber())
-                .withNumberOfElements(products.getNumberOfElements())
-                .build();
+        return productService.getProducts(pageable);
     }
 
     @Override

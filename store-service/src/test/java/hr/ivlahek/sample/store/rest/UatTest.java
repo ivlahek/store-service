@@ -54,7 +54,6 @@ public class UatTest extends WebApiTest {
         OrderDto orderDto = orderClient.createOrder(createOrderDto);
         assertThat(orderDto.getTotalPrice().doubleValue()).isEqualTo(11.3);
         assertThat(orderDto.getEmail()).isEqualTo("test@test");
-        assertThat(orderDto.getOrderItemDtos()).hasSize(2);
 
         //GET ORDER
         String dateFrom = DateTimeFormatter.ISO_DATE_TIME.format(Instant.now().minusSeconds(150).atZone(ZoneId.of("UTC")));

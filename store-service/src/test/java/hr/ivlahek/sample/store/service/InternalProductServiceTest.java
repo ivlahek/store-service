@@ -1,7 +1,9 @@
 package hr.ivlahek.sample.store.service;
 
+import hr.ivlahek.sample.store.client.page.PageResponseDto;
 import hr.ivlahek.sample.store.client.product.CreateProductDto;
 import hr.ivlahek.sample.store.client.product.CreateProductDtoBuilder;
+import hr.ivlahek.sample.store.client.product.ProductDto;
 import hr.ivlahek.sample.store.exception.AppException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
@@ -9,7 +11,6 @@ import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.entity.ProductBuilder;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
-public class ProductServiceTest extends RepositoryTest {
+public class InternalProductServiceTest extends RepositoryTest {
 
     @Autowired
     private ProductService productService;
@@ -26,7 +27,7 @@ public class ProductServiceTest extends RepositoryTest {
     public void should_save_product() {
         CreateProductDto createProductDto = CreateProductDtoBuilder.aCreateProductDto1().build();
         //OPERATE
-        Product product = productService.create(createProductDto);
+        ProductDto product = productService.create(createProductDto);
 
         //CHECK
         Optional<Product> createdProduct = productRepository.findById(product.getId());
@@ -55,11 +56,11 @@ public class ProductServiceTest extends RepositoryTest {
         Product product2 = ProductBuilder.aProduct2().build();
         productRepository.save(product2);
 
-        Page<Product> page = productService.getProducts(PageRequest.of(0, 1));
+        PageResponseDto<ProductDto> page = productService.getProducts(PageRequest.of(0, 1));
 
         //check
         assertThat(page.getContent()).hasSize(1);
-        Product actual = page.getContent().get(0);
+        ProductDto actual = page.getContent().get(0);
         assertThat(actual.getId()).isEqualTo(product1.getId());
     }
 

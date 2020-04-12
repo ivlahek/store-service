@@ -2,12 +2,14 @@ package hr.ivlahek.sample.store.service;
 
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderItemDto;
-import hr.ivlahek.sample.store.client.order.OrderItemDto;
+import hr.ivlahek.sample.store.client.order.OrderDto;
+import hr.ivlahek.sample.store.client.page.PageResponseDto;
 import hr.ivlahek.sample.store.exception.InternalServerErrorException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.entity.Order;
 import hr.ivlahek.sample.store.persistence.entity.Product;
 import hr.ivlahek.sample.store.persistence.repository.OrderRepository;
+import hr.ivlahek.sample.store.service.internal.InternalProductService;
 import hr.ivlahek.sample.store.service.mapper.OrderMapper;
 import hr.ivlahek.sample.store.service.util.PriceCalculator;
 import org.slf4j.Logger;
@@ -31,11 +33,11 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private ProductService productService;
+    private InternalProductService productService;
     @Autowired
     private OrderItemService orderItemService;
 
-    public Order placeOrder(CreateOrderDto createOrderDto) {
+    public OrderDto placeOrder(CreateOrderDto createOrderDto) {
         logger.info("Place order method called {}", createOrderDto);
         List<Long> productIds = createOrderDto.getOrderItemDtos()
                 .stream()
@@ -57,11 +59,25 @@ public class OrderService {
         logger.info("Order saved {}!", order);
         order.getOrderItems().addAll(orderItemService.save(quantityMapPerProduct, products, order));
         logger.info("Details about the order saved!");
-        return order;
+        return new OrderMapper().map(order);
     }
 
-    public Page<Order> getOrders(Pageable pageable, Date dateFrom, Date dateTo) {
+    public PageResponseDto<OrderDto> getOrders(Pageable pageable, Date dateFrom, Date dateTo) {
         logger.info("Fetching orders!");
-        return orderRepository.findByDateCreatedBetween(dateFrom, dateTo, pageable);
+        Page<Order> page = orderRepository.findByDateCreatedBetween(dateFrom, dateTo, pageable);
+
+        return PageResponseDto.PageResponseDtoBuilder.aPageResponseDto()
+                .withContent(new OrderMapper().map(page.getContent()))
+                .withFirst(page.isFirst())
+                .withLast(page.isLast())
+                .withNextPage(page.hasNext())
+                .withSize(page.getSize())
+                .withTotalElements(page.getTotalElements())
+                .withTotalPages(page.getTotalPages())
+                .withPreviousPage(page.hasPrevious())
+                .withPreviousPage(page.hasContent())
+                .withNumber(page.getNumber())
+                .withNumberOfElements(page.getNumberOfElements())
+                .build();
     }
 }

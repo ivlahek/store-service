@@ -3,6 +3,7 @@ package hr.ivlahek.sample.store.service;
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderDtoBuilder;
 import hr.ivlahek.sample.store.client.order.CreateOrderItemDtoBuilder;
+import hr.ivlahek.sample.store.client.order.OrderDto;
 import hr.ivlahek.sample.store.exception.AppException;
 import hr.ivlahek.sample.store.exception.messages.ExceptionMessage;
 import hr.ivlahek.sample.store.persistence.RepositoryTest;
@@ -40,10 +41,10 @@ public class OrderServiceTest extends RepositoryTest {
                 .build();
 
         //OPERATE
-        Order order = orderService.placeOrder(createOrderDto);
+        OrderDto orderDto = orderService.placeOrder(createOrderDto);
 
         //CHECK
-        order = orderRepository.findById(order.getId()).get();
+        Order order = orderRepository.findById(orderDto.getId()).get();
         assertThat(order.getTotalPrice()).isEqualTo(7d);
         assertThat(order.getDateCreated()).isToday();
         assertThat(order.getEmail()).isEqualTo(createOrderDto.getEmail());

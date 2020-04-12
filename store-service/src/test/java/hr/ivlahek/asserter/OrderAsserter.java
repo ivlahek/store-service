@@ -2,7 +2,6 @@ package hr.ivlahek.asserter;
 
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.OrderDto;
-import hr.ivlahek.sample.store.client.order.OrderItemDto;
 import hr.ivlahek.sample.store.persistence.entity.Order;
 import hr.ivlahek.sample.store.persistence.entity.OrderItem;
 import hr.ivlahek.sample.store.persistence.repository.OrderRepository;
@@ -46,14 +45,6 @@ public class OrderAsserter {
         assertThat(orderDto.getDateCreated()).isEqualTo(order.getDateCreated());
         assertThat(orderDto.getId()).isEqualTo(order.getId());
 
-        assertThat(orderDto.getOrderItemDtos()).hasSameSizeAs(order.getOrderItems());
-        assertPlacedOrderProduct(orderDto.getOrderItemDtos().get(0), order.getOrderItems().get(0));
     }
 
-    private void assertPlacedOrderProduct(OrderItemDto orderItemDto, OrderItem orderItem) {
-        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem.getProductId());
-        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem.getQuantity());
-        assertThat(orderItemDto.getOrderItemPrice().doubleValue()).isEqualTo(orderItem.getProductPrice()).isNotZero();
-
-    }
 }

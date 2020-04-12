@@ -3,7 +3,6 @@ package hr.ivlahek.sample.store.service;
 import hr.ivlahek.sample.store.client.order.CreateOrderDto;
 import hr.ivlahek.sample.store.client.order.CreateOrderDtoBuilder;
 import hr.ivlahek.sample.store.client.order.OrderDto;
-import hr.ivlahek.sample.store.client.order.OrderItemDto;
 import hr.ivlahek.sample.store.persistence.entity.*;
 import hr.ivlahek.sample.store.service.mapper.OrderMapper;
 import org.junit.Before;
@@ -50,15 +49,6 @@ public class OrderMapperTest {
         OrderDto dto = orderMapper.map(order);
 
         assertProductDto(dto, order);
-        assertThat(dto.getOrderItemDtos()).hasSize(2);
-        assertPlacedOrderItem(dto.getOrderItemDtos().get(0), placedOrder1);
-        assertPlacedOrderItem(dto.getOrderItemDtos().get(1), placedOrder2);
-    }
-
-    private void assertPlacedOrderItem(OrderItemDto orderItemDto, OrderItem orderItem1) {
-        assertThat(orderItemDto.getOrderItemPrice().doubleValue()).isEqualTo(orderItem1.getProductPrice());
-        assertThat(orderItemDto.getProductId()).isEqualTo(orderItem1.getProductId()).isNotZero();
-        assertThat(orderItemDto.getQuantity()).isEqualTo(orderItem1.getQuantity()).isNotZero();
     }
 
     private void assertProductDto(OrderDto dto, Order order) {
